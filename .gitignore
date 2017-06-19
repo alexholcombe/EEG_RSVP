@@ -1,0 +1,9 @@
+*.pyc
+old/
+dataPreprocess/anonymisationKey.txt
+dataRaw/
+*.Rhistory
+.Rapp.history
+exportedImages/fr*
+.Rproj.user
+experiment_specific/transient_attention/sounds/
