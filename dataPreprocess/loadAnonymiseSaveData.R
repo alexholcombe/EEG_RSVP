@@ -7,7 +7,7 @@ destinatnDir<-"dataAnonymized/" #where the anonymized data will be exported to
 expNameForFile<-"EEG_RSVP"
 anonymiseData <- TRUE
 
-thisExpFolder = "dataRaw/"
+thisExpFolder = "dataRaw"
 #In the dataRAw folder, each participant is expected to have their own folder with all their files.
 #  In many cases there a participant will have only one .txt file, but could have multiple in case of multiple sessions.
 
@@ -26,9 +26,18 @@ for (i in 1:length(foldersThisExp)) {
           		 } )
       #rawDataLoad$file <- file  Shouldn't do this because first the subject name and data stamp part would need to be anonymized
       numTrials<- length(rawDataLoad$trialnum)
-      msg=''
       rawDataThis<- rawDataLoad
-      cat(paste0("Loaded file ",file,msg))
+      #Work out subject name, purely to check whether it matches folder name, and warn if not
+      foldername <- strsplit(thisSubjectDir,"/")[[1]][2]
+      splt<- strsplit(file, "_")
+      subjnameFromFname<- splt[[1]][1]
+      subjnameFromFile<- as.character(rawDataThis$subject[1])
+      msg=''
+      if ((subjnameFromFname != foldername) | (subjnameFromFile != subjnameFromFname)) {
+        msg =paste0(" BUT subjnames do not match. From folder name:'",foldername,"' from filename:'",subjnameFromFname,
+                    "' from file:'",subjnameFromFile,"'")
+      }
+      cat(paste0("Loaded file ",file, msg))
       #omit first trial if total trials are odd, last probably a repeat. And first trial people often discombobulated      
       msg=""
       removeFirstTrialIfOdd = TRUE
