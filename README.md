@@ -11,3 +11,4 @@ The dataPreprocess/loadAnonymizeSaveData.R file does what it says on the tin, pu
 ## Issues
 
 * Should save the whole letter sequence, nost just the letters
+* Wh is there noise on the fixation point?
