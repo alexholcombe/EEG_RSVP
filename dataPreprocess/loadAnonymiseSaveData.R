@@ -4,6 +4,7 @@
 setwd("/Users/alexh/Documents/attention_tempresltn/EEGRSVP/EEG_RSVP")
 
 destinatnDir<-"dataAnonymized/" #where the anonymized data will be exported to
+expNameForFile<-"EEG_RSVP"
 anonymiseData <- TRUE
 
 thisExpFolder = "dataRaw/"
@@ -23,7 +24,7 @@ for (i in 1:length(foldersThisExp)) {
       	    		error=function(e) { 
       	    	   			stop( paste0("ERROR reading the file ",fname," :",e) )
           		 } )
-      rawDataLoad$file <- file
+      #rawDataLoad$file <- file  Shouldn't do this because first the subject name and data stamp part would need to be anonymized
       numTrials<- length(rawDataLoad$trialnum)
       msg=''
       rawDataThis<- rawDataLoad
@@ -105,41 +106,14 @@ checkCombosOccurEqually(rawData, c("subject","task") )
 dat <-rawData
 #end data importation
 
-#If instead of using raw speed, I rank the speed within each numObjects*numTargets, then from that perspective everything should
-#be perfectly counterbalanced, because each numObjects*numTargets combination has the same number of speeds tested
-#But the rank for a speed depends on what numObjects-numTargets condition it's in. Should be easy with ddply
-ordinalSpeedAssign <- function(df) {
-#df$speedRank <- rank(df$speed)  #Rank won't work, always wants to break all ties. Whereas I want to preserve ties.
-  df$speedRank <- match(df$speed,unique(df$speed))
-  df
-}
-d<- plyr::ddply(dat,.(numObjects,numTargets),ordinalSpeedAssign)
-#grouped<- group_by(dat,numObjects,numTargets) #can't get this to work with dpylr but involves something with .  http://stackoverflow.com/questions/22182442/dplyr-how-to-apply-do-on-result-of-group-by
-#d<- dplyr::summarise(grouped, speedRank= match(speed,unique(.$speed)))
-#dat %>% group_by(numObjects,numTargets) %>% do(match(speed,unique(.$speed)))
-#check whether counterbalanced with for each speed list for a particular condition, did each equally often
-#Might not be if ran multiple sessions with different speeds
-checkCombosOccurEqually(d, c("numObjects","numTargets","speedRank") )
-
-sanityCheckEyeTracking=TRUE
-if (sanityCheckEyeTracking) {
-  library(ggplot2)
-  h<-ggplot(filter(dat,exp=="circleOrSquare_twoTargets"),
-            aes(x=maxXdev,y=maxYdev,color=file)) + geom_point() +facet_grid(~subject)  #Have a look at fixation positions
-  quartz("circleOrSquare_twoTargets"); show(h)
-  h<-ggplot(filter(dat,exp=="offCenter"),
-            aes(x=maxXdev)) + geom_histogram()+ facet_grid(~subject) #Have a look at fixation positions
-  quartz("offCenter"); show(h)
-}
-dat$correct = dat$orderCorrect /3
-dat$chanceRate= 1 / dat$numObjects
-
 rotX <- function(ch,x) 
 { #rotate each letter of a string ch by x letters thru the alphabet, as long as x<=13
   old <- paste(letters, LETTERS, collapse="", sep="")
   new <- paste(substr(old, 2*x+1, 26*2), substr(old, 1, 26), sep="")
   chartr(old, new, ch)
 }
+#to improve on this, perhaps generate a random list of unique initials that are as long as the number of Ss
+
 if (anonymiseData) {
   keyFile = paste0('dataPreprocess/',"anonymisationKey.txt")
   if ( !file.exists(keyFile) ) {
@@ -152,11 +126,9 @@ if (anonymiseData) {
   print('Mapping from name to anonymised:')
   print(table(subjectNotanonymised,dat$subject))
 }
-	
-#table(d$speedRank,d$numObjects,d$numTargets,d$subject)
 
 #Save anonymised data for loading by doAllAnalyses.R
-fname=paste(destinatnDir,destinationName,sep="")
+fname=paste(destinatnDir,expNameForFile,sep="")
 save(dat, file = paste(fname,".RData",sep=""))
 write.csv(dat, file = paste(fname,".csv",sep=""))
-print(paste("saved data in ",fname,".RData and ",fname,".csv",sep=""))
+print(paste("Saved ",ifelse(anonymiseData, "anonymised", "")," data in ",fname,".RData and ",fname,".csv",sep=""))
