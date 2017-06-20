@@ -2,11 +2,12 @@
 #See the README.md for more information: https://github.com/alexholcombe/attentional-blink/blob/master/README.md
 #git remote add origin https://github.com/alexholcombe/attentional-blink.git
 from __future__ import print_function
-import time, sys, os#, pylab
+import time, sys, os, pylab
 if os.name != 'mac':
     from psychopy import parallel
-from psychopy import monitors, visual, event, data, logging, core, sound, gui
+from psychopy import monitors, visual, event, data, logging, core, sound, gui, parallel
 import psychopy.info
+import pyo
 import numpy as np
 from math import atan, log, ceil
 from copy import deepcopy
@@ -16,46 +17,31 @@ try:
 except ImportError:
     print('Could not import from noiseStaircaseHelpers.py (you need that file to be in the same directory)')
 try: import stringResponse
-except ImportError:  print('Could not import strongResponse.py (you need that file to be in the same directory)')
+except ImportError:  print('Could not import stringResponse.py (you need that file to be in the same directory)')
 try: import letterLineupResponse
 except ImportError:  print('Could not import letterLineupResponse.py (you need that file to be in the same directory)')
 descendingPsycho = True
 
 ##              SET UP polly attempt              ##
 # Experiment variables
-send_triggers = False
-p_started = False                               #Whether we've started the experiment (used to determine whether to do a dummy trial after show_exit_screen)
-p_port = 0xc050
-p_targetTriggervalue = 99 #this is the code that is sent when the target is presented 
-p_stimuliCodes = range(1,27) #this the code to send for stimuli1,stimuli2, etc.
-p_startTrialSingleLeft= 100 # codes that are sent at start of trial to give information about the trial
-p_startTrialSingleRight= 120 
-p_startTrialDualLeft= 200
-p_startTrialDualRight= 220
-p_resp0Lcorrect=110#codes to label the responses (full definitions found here https://docs.google.com/spreadsheets/d/1DFz8UYBf-cw3UojR7Va5u7hPOHZE05YQPRT8jkmjnmg/edit#gid=0)
-p_resp0Lincorrect=103
-p_resp0Lapprox_1=101
-p_resp0Lapprox_2=102
-p_resp0Lapprox1=111
-p_resp0Lapprox2=112
-p_resp0Rcorrect=130
-p_resp0Rincorrect=123
-p_resp0Rapprox_1=121
-p_resp0Rapprox_2=122
-p_resp0Rapprox1=131
-p_resp0Rapprox2=132
-p_resp1Lcorrect=210
-p_resp1Lincorrect=203
-p_resp1Lapprox_1=201
-p_resp1Lapprox_2=202
-p_resp1Lapprox1=211
-p_resp1Lapprox2=212
-p_resp1Rcorrect=230
-p_resp1Rincorrect=223
-p_resp1Rapprox_1=221
-p_resp1Rapprox_2=222
-p_resp1Rapprox1=231
-p_resp1Rapprox2=232
+# Open parallel port and make sure it is at 0
+
+send_triggers = False # see for a list of trigger codes https://docs.google.com/spreadsheets/d/1DFz8UYBf-cw3UojR7Va5u7hPOHZE05YQPRT8jkmjnmg/edit#gid=0
+if not send_triggers:
+    print("WARNING not sending triggers because send_triggers FALSE")
+p_started = True                               #Whether we've started the experiment (used to determine whether to do a dummy trial after show_exit_screen)
+p_targetTriggervalue = 50 #this is the code that is sent when the target is presented 
+#p_stimuliCodes = range(1,27) #this the code to send for stimuli1,stimuli2, etc.
+p_startTrialSingleLeft= 1 # codes that are sent at start of trial to give information about the trial
+p_startTrialSingleRight= 2 
+p_startTrialDualLeft= 3
+p_startTrialDualRight= 4
+p_middleOfRangeForSerialPositionError = range(184,219)
+p_correct=200
+p_timingBlip= 250
+p_notimingblip= 249
+#p_middleOfRangeForSerialPositionError for serial position error of 0 is 200.
+
 p_wait = 0.001
 #Whether AB task is run, dual stream, or both, is determined by setup of conditions. Search for trialHandler
 tasks=['T1','T1T2']; task = tasks[1]
@@ -68,10 +54,10 @@ demo=False #False
 exportImages= False #quits after one trial
 subject='Hubert' #user is prompted to enter true subject name
 if autopilot: subject='auto'
-if os.path.isdir('.'+os.sep+'data'):
-    dataDir='data'
+if os.path.isdir('.'+os.sep+'dataRaw'):
+    dataDir='dataRaw'
 else:
-    print('"data" directory does not exist, so saving data in present working directory')
+    print('"dataRaw" directory does not exist, so saving data in present working directory')
     dataDir='.'
 timeAndDateStr = time.strftime("%d%b%Y_%H-%M", time.localtime())
 
@@ -80,10 +66,6 @@ feedback=False
 autoLogging=False
 if demo:
     refreshRate = 60.;  #100 LN: refresh rate for previous AB and RSVP task for gamers was 60
-# Open parallel port and make sure it is at 0
-if send_triggers:
-    p_port = parallel.ParallelPort(address=p_port)
-    p_port.setData(0)
 staircaseTrials = 25
 prefaceStaircaseTrialsN = 20 #22
 prefaceStaircaseNoise = np.array([5,20,20,20, 50,50,50,5,80,80,80,5,95,95,95]) #will be recycled / not all used, as needed
@@ -92,9 +74,8 @@ bgColor = [-.7,-.7,-.7] # [-1,-1,-1]
 cueColor = [1.,1.,1.]
 letterColor = [1.,1.,1.]
 cueRadius = 2.5 #6 deg, as in Martini E2    Letters should have height of 2.5 deg
-
-widthPix= 1280 #monitor width in pixels of Agosta
-heightPix= 1024 #800 #monitor height in pixels
+widthPix= 1920 #1440 # #monitor width in pixels of Agosta
+heightPix= 1080 #900 # #800 #monitor height in pixels
 monitorwidth = 40.5 #monitor width in cm
 scrn=0 #0 to use main screen, 1 to use external screen connected to computer
 fullscr=False #True to use fullscreen, False to not. Timing probably won't be quite right if fullscreen = False
@@ -112,6 +93,9 @@ if demo:
 viewdist = 57. #cm
 pixelperdegree = widthPix/ (atan(monitorwidth/viewdist) /np.pi*180)
 print('pixelperdegree=',pixelperdegree)
+if send_triggers:
+    p_port = parallel.ParallelPort(address=0xd050)
+    p_port.setData(0)
     
 # create a dialog from dictionary 
 infoFirst = { 'Do staircase (only)': False, 'Check refresh etc':False, 'Fullscreen (timing errors if not)': False, 'Screen refresh rate': 60 }
@@ -137,9 +121,9 @@ if quitFinder:
 
 #letter size 2.5 deg
 numLettersToPresent = 26
-SOAms = 133 #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
+SOAms =  133 #1000     #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
 #Minimum SOAms should be 84  because any shorter, I can't always notice the second ring when lag1.   71 in Martini E2 and E1b (actually he used 66.6 but that's because he had a crazy refresh rate of 90 Hz)
-letterDurMs = 80 #23.6  in Martini E2 and E1b (actually he used 22.2 but that's because he had a crazy refresh rate of 90 Hz)
+letterDurMs = 80 #500    #  #23.6  in Martini E2 and E1b (actually he used 22.2 but that's because he had a crazy refresh rate of 90 Hz)
 
 ISIms = SOAms - letterDurMs
 letterDurFrames = int( np.floor(letterDurMs / (1000./refreshRate)) )
@@ -158,7 +142,7 @@ mon = monitors.Monitor(monitorname,width=monitorwidth, distance=viewdist)#relyin
 mon.setSizePix( (widthPix,heightPix) )
 units='deg' #'cm'
 def openMyStimWindow(): #make it a function because have to do it several times, want to be sure is identical each time
-    myWin = visual.Window(monitor=mon,size=(widthPix,heightPix),allowGUI=allowGUI,units=units,color=bgColor,colorSpace='rgb',fullscr=fullscr,screen=scrn,waitBlanking=waitBlank) #Holcombe lab monitor
+    myWin = visual.Window(monitor=mon,size=(widthPix,heightPix),allowGUI=allowGUI,units=units,color=bgColor,colorSpace='rgb',fullscr=fullscr,screen=scrn,waitBlanking=waitBlank, winType=None) #Holcombe lab monitor
     return myWin
 myWin = openMyStimWindow()
 refreshMsg2 = ''
@@ -276,7 +260,7 @@ if doStaircase:
 fileName = os.path.join(dataDir, subject + '_' + infix+ timeAndDateStr)
 if not demo and not exportImages:
     dataFile = open(fileName+'.txt', 'w')
-    saveCodeCmd = 'cp \'' + sys.argv[0] + '\' '+ fileName + '.py'
+    saveCodeCmd = 'copy \'' + sys.argv[0] + '\' '+ fileName + '.py' #cp doesn't work in windows so changed to copy
     os.system(saveCodeCmd)  #save a copy of the code as it was when that subject was run
     logFname = fileName+'.log'
     ppLogF = logging.LogFile(logFname, 
@@ -315,7 +299,8 @@ except: #in case file missing, create inferiro click manually
 
 if showRefreshMisses:
     fixSizePix = 32 #2.6  #make fixation bigger so flicker more conspicuous
-else: fixSizePix = 32
+else:
+    fixSizePix = 32
 fixColor = [1,1,1]
 if exportImages: fixColor= [0,0,0]
 fixatnNoiseTexture = np.round( np.random.rand(fixSizePix/4,fixSizePix/4) ,0 )   *1.0 #Can counterphase flicker  noise texture to create salient flicker if you break fixation
@@ -359,7 +344,7 @@ for task in  ['T1','T1T2']: #T1 task is just for the single-target tasks, but bo
                {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
              )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream = 1 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+trialsPerConditionDualStream = 13 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
 trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
@@ -417,27 +402,10 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
   cueFrames = cuesPos*SOAframes  #cuesPos is global variable
   letterN = int( np.floor(n/SOAframes) )
   frameOfThisLetter = n % SOAframes #every SOAframes, new letter. frameOfThisLetter means how many frames into this letter we are. 0 means the first frame of this letter
-  if letterN==0 and frameOfThisLetter==0:
-        #send triggers for start of trial
-    if send_triggers:
-        send_trigger_to_port
-        if task== 'T1' and targetLeftRightIfOne=='left':
-            send_trigger_to_port (p_startTrialSingleLeft)
-        if task== 'T1' and targetLeftRightIfOne=='right':
-            send_trigger_to_port (p_startTrialSingleRight)
-        if task== 'T1T2' and firstRespLRifTwo=='left':
-            send_trigger_to_port (p_startTrialDualLeft)
-        if task== 'T1T2' and firstRespLRifTwo=='right':
-            send_trigger_to_port(p_startTrialDualRight)
   showLetter = frameOfThisLetter < letterDurFrames #if true, it's not time for the blank ISI.  it's still time to draw the letter
   #print 'n=',n,' SOAframes=',SOAframes, ' letterDurFrames=', letterDurFrames, ' (n % SOAframes) =', (n % SOAframes)  #DEBUGOFF
   thisLetterIdx = letterSeqStream1[letterN] #which letter, from A to Z (1 to 26), should be shown?
-  if send_triggers:
-    if cuesTimeToDraw[cueN] == False:
-        send_trigger_to_port (p_stimuliCodes=letterN) 
   thisLetterIdx2 = letterSeqStream2[letterN] #which letter, from A to Z (1 to 26), should be shown?
-  ##only send one trigger at a time?
-  #so that any timing problems occur just as often for every frame, always draw the letter and the cue, but simply draw it in the bgColor when it's not meant to be on
   cuesTimeToDraw = list([False])*len(cues) #if don't use this, for AB task, bg color T2 cue will be drawn on top of T1 cue
   for cue in cues: #might be at same time, or different times
     cue.setLineColor( bgColor )
@@ -446,17 +414,10 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
     if n>=thisCueFrameStart and n<thisCueFrameStart+cueDurFrames:
         cues[cueN].setLineColor( cueColor )
         cuesTimeToDraw[cueN] = True
-        #send triggers if cue?
-        if send_triggers:
-            if n == 0:
-                send_trigger_to_port(p_targetTriggervalue)
-            elif n == cuesPos[0] or (task == 'T1T2' and n == cuesPos[1]):
-                send_trigger_to_port(p_targetTriggervalue)
 
-  for cueN in xrange(len(cues)):
-    if cuesTimeToDraw[cueN] == True:
-        cues[cueN].draw()
-    
+    for cueN in xrange(len(cues)):
+        if cuesTimeToDraw[cueN] == True:
+            cues[cueN].draw()
   if showLetter:
      ltrsDrawObjectsStream1[thisLetterIdx].setColor( letterColor )
   else: ltrsDrawObjectsStream1[thisLetterIdx].setColor( bgColor )
@@ -468,7 +429,6 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
       if showLetter:
          ltrsDrawObjectsStream2[thisLetterIdx2].setColor( letterColor )
       else: ltrsDrawObjectsStream2[thisLetterIdx2].setColor( bgColor )
-
       ltrsDrawObjectsStream2[thisLetterIdx2].draw()
 
   refreshNoise = False #Not recommended because takes longer than a frame, even to shuffle apparently. Or may be setXYs step
@@ -483,7 +443,10 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
     noise.draw()
     if numStreams==2:
         noise2.draw()
-  return True 
+  if frameOfThisLetter == 0:
+    return 50 if cuesTimeToDraw[0] else letterN + 1
+  else:
+    return None
 # #######End of function definition that displays the stimuli!!!! #####################################
 #############################################################################################################################
 
@@ -509,8 +472,8 @@ noiseOffsetKludge = 0.0
 ltrsDrawObjectsStream1 = list()
 ltrsDrawObjectsStream2 = list()
 for i in range(0,26): #need to add the font Sloan to computer
-       letterStream1 = visual.TextStim(myWin,pos=(-cueOffset,0), font= 'sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
-       letterStream2 = visual.TextStim(myWin,pos=(cueOffset,0), font= 'sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
+       letterStream1 = visual.TextStim(myWin,pos=(-cueOffset,0),font='Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
+       letterStream2 = visual.TextStim(myWin,pos=(cueOffset,0), font= 'Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
        letterStream1.setHeight( ltrHeight ); letterStream2.setHeight( ltrHeight )
        letter = numberToLetter(i)
        letterStream1.setText(letter,log=False); letterStream2.setText(letter,log=False)
@@ -531,14 +494,19 @@ def timingCheckAndLog(ts,trialN):
     longFrameLimit = np.round(1000/refreshRate*(1.0+frameTimeTolerance),2)
     idxsInterframeLong = np.where( interframeIntervs > longFrameLimit ) [0] #frames that exceeded 150% of expected duration
     numCasesInterframeLong = len( idxsInterframeLong )
-    if numCasesInterframeLong >0 and (not demo):
-       longFramesStr =  'ERROR,'+str(numCasesInterframeLong)+' frames were longer than '+str(longFrameLimit)+' ms'
-       if demo: 
+    if send_triggers:
+        if numCasesInterframeLong >0:
+            send_trigger_to_port(p_timingBlip)
+        else:
+            send_trigger_to_port(p_notimingblip)
+    if not demo:
+        longFramesStr =  'ERROR,'+str(numCasesInterframeLong)+' frames were longer than '+str(longFrameLimit)+' ms'
+        if demo: 
          longFramesStr += 'not printing them all because in demo mode'
-       else:
+        else:
            longFramesStr += ' apparently screen refreshes skipped, interframe durs were:'+\
                     str( np.around(  interframeIntervs[idxsInterframeLong] ,1  ) )+ ' and was these frames: '+ str(idxsInterframeLong)
-       if longFramesStr != None:
+        if longFramesStr != None:
                 logging.error( 'trialnum='+str(trialN)+' '+longFramesStr )
                 if not demo:
                     flankingAlso=list()
@@ -554,6 +522,7 @@ def timingCheckAndLog(ts,trialN):
                     flankingAlso = flankingAlso.astype(np.integer) #cast as integers, so can use as subscripts
                     logging.info( 'flankers also='+str( np.around( interframeIntervs[flankingAlso], 1) )  ) #because this is not an essential error message, as previous one already indicates error
                       #As INFO, at least it won't fill up the console when console set to WARNING or higher
+
     return numCasesInterframeLong
     #end timing check
     
@@ -571,15 +540,15 @@ if doAB:
 def send_trigger_to_port(trigger_value):
     #trigger_value is the integer (1 to 255) that you want to send to the EEG system
     #This function will set the channel to that integer for wait_time, and then set the channel back to zero (no message)
-    wait_time = .0004 #seconds
     p_port.setData(trigger_value)
-    core.wait(wait_time) #wait wait_time seconds to make sure the message was received
+    core.wait(.002) #wait wait_time seconds to make sure the message was received
     p_port.setData(0)
     
 def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, proportnNoise,trialN):
     #relies on global variables:
     #   logging, bgColor
     #
+    myWin.setMouseVisible(False)
     print("numStreams = ",numStreams)
     cuesPos = [] #will contain the positions of all the cues (targets) kkkkk
     cuesPos.append(cue1pos)
@@ -608,7 +577,7 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
             correctAnsStream2 = np.array(letterSeqStream2[cuesPos[1]] )
         elif task=='T1':
                 correctAnsStream1 = np.array( letterSeqStream1[cuesPos[0]] )
-                correctAnsStream2 = np.array( letterSeqStream2[cuesPos[0]] )
+                correctAnsStream2 = np.array( letterSeqStream2[cuesPos[0]] )#is this right????
 
     print("corrrectAnsStream1=",correctAnsStream1, " or ", numberToLetter(correctAnsStream1), " correctAnsStream2=",correctAnsStream2, " or ", numberToLetter(correctAnsStream2) ) #debugOFF
 
@@ -664,26 +633,48 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
         #if i%4>=2 or demo or exportImages: #flicker fixation on and off at framerate to see when skip frame
         #      fixation.draw()
         #else: fixationBlank.draw()
+            #draw fixation
         fixationPoint.draw()
-        myWin.flip()  #end fixation interval
+        if i == 0:
+            trial_onset = myWin.flip()
+            #send triggers for start of trial
+            if send_triggers:
+                if task == 'T1':
+                    if targetLeftRightIfOne=='left':
+                        send_trigger_to_port(p_startTrialSingleLeft)
+                    elif targetLeftRightIfOne=='right':
+                     send_trigger_to_port(p_startTrialSingleRight)
+                elif task== 'T1T2':
+                    if firstRespLRifTwo=='left':
+                        send_trigger_to_port (p_startTrialDualLeft)
+                    elif firstRespLRifTwo=='right':
+                        send_trigger_to_port(p_startTrialDualRight)
+        else:
+            myWin.flip()
+        myWin.flip()
+
+        #end fixation interval
     #myWin.setRecordFrameIntervals(True);  #can't get it to stop detecting superlong frames
     t0 = trialClock.getTime()
-
-
+    #while trial_onset + 0.492 < core.getClock(): pass
     for n in range(trialDurFrames): #this is the loop for this trial's stimulus!
         if numStreams==2:
             fixationPoint.draw()
-        worked = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
+#        worked = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
+#                                                     numStreams,ltrsDrawObjectsStream1, ltrsDrawObjectsStream2,
+#                                                     noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots) #draw letter and possibly cue and noise on top
+        trigger_val = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
                                                      numStreams,ltrsDrawObjectsStream1, ltrsDrawObjectsStream2,
                                                      noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots) #draw letter and possibly cue and noise on top
         if exportImages:
             myWin.getMovieFrame(buffer='back') #for later saving
             framesSaved +=1              
         myWin.flip()
+        if send_triggers and trigger_val:
+            send_trigger_to_port(100 + trigger_val)
         t=trialClock.getTime()-t0;  ts.append(t);
     #end of big stimulus loop
     myWin.setRecordFrameIntervals(False);
-
     if task=='T1':
         respPromptStim.setText('Which letter was circled?',log=False)
     elif task=='T1T2':
@@ -757,70 +748,9 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print(eachCorrect[cueI] , '\t', end='',file=dataFile)   #correct0
         print(responsePosRelative[cueI], '\t', end='',file=dataFile) #responsePosRelative0
         if send_triggers:
-            if responsePosRelative[cueI]==responsePosRelative0:
-                if targetLeftRightIfOne=='left':
-                    #p_middleOfRangeForSerialPositionError for serial position error of 0 is 128.
-                    code = p_middleOfRangeForSerialPositionError + responsePosRelative[cueI]
-                    send_trigger_to_port(code)
-                    #p_firstTargetIncorrect = 232    code for incorrect for the first target is 232
-                    #code for correct for first target is 233
-                    #code for incorrect for second target is 234
-                    #code for correct for second target is 235
-                    incorrectThisCue = p_firstTargetIncorrect + cueI*2 #when cueI=0, then 232.  When cueI=1, 234.
-                    send_trigger_to_port(  incorrectThisCue + eachCorrect[cueI])
-                    
-                    if responsePosRelative0[0]:
-                        send_trigger_to_port(p_resp0Lcorrect)
-                    if responsePosRelative0[-1]:
-                        send_trigger_to_port(p_resp0Lapprox_1)
-                    if responsePosRelative0[-2]:
-                        send_trigger_to_port(p_resp0Lapprox_2)
-                    if responsePosRelative0[1]:
-                        responsePosRelative0(p_resp0Lapprox1)
-                    if responsePosRelative0[2]:
-                        send_trigger_to_port(p_resp0Lapprox2)
-                    else:
-                        send_trigger_to_port(p_resp0Lincorrect)
-                if targetLeftRightIfOne=='right':
-                    if responsePosRelative0[0]:
-                        send_trigger_to_port(p_resp0Rcorrect)
-                    if responsePosRelative0[-1]:
-                        send_trigger_to_port(p_resp0Rapprox_1)
-                    if responsePosRelative0[-2]:
-                        send_trigger_to_port(p_resp0Rapprox_2)
-                    if responsePosRelative0[1]:
-                        responsePosRelative0(p_resp0Rapprox1)
-                    if responsePosRelative0[2]:
-                        send_trigger_to_port(p_resp0Rapprox2)
-                    else:
-                        send_trigger_to_port(p_resp0Rincorrect)
-            if responsePosRelative[cueI]==responsePosRelative1:
-                if firstRespLRifTwo=='left':
-                    if responsePosRelative1[0]:
-                        send_trigger_to_port(p_resp1Rcorrect)
-                    if responsePosRelative1[-1]:
-                        send_trigger_to_port(p_resp1Rapprox_1)
-                    if responsePosRelative1[-2]:
-                        send_trigger_to_port(p_resp1Rapprox_2)
-                    if responsePosRelative1[1]:
-                        responsePosRelative0(p_resp1Rapprox1)
-                    if responsePosRelative1[2]:
-                        send_trigger_to_port(p_resp1Rapprox2)
-                    else:
-                        send_trigger_to_port(p_resp1Rincorrect)
-                if firstRespLRifTwo=='right':
-                    if responsePosRelative1[0]:
-                        send_trigger_to_port(p_resp1Lcorrect)
-                    if responsePosRelative1[-1]:
-                        send_trigger_to_port(p_resp1Lapprox_1)
-                    if responsePosRelative1[-2]:
-                        send_trigger_to_port(p_resp1Lapprox_2)
-                    if responsePosRelative1[1]:
-                        responsePosRelative1(p_resp1Lapprox1)
-                    if responsePosRelative1[2]:
-                        send_trigger_to_port(p_resp1Lapprox2)
-                    else:
-                        send_trigger_to_port(p_resp1Lincorrect)
+            code = int(p_correct + responsePosRelative[cueI])
+            print(code)
+            send_trigger_to_port( code )
         print('for cueI=',cueI,' cuesPos[cueI]=',cuesPos[cueI], ' answerCharacter=',answerCharacter, ' responses[cueI]=',responses[cueI], ' eachCorrect[cueI]=',eachCorrect[cueI],' resopnsePosRelative[cueI]= ',responsePosRelative[cueI])
         if task=='T1T2':
             correct = eachCorrect.all()
@@ -832,6 +762,8 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print('NaN', '\t', end='', file=dataFile) #answer1
         print('NaN', '\t', end='', file=dataFile) #response1
         print('NaN' , '\t', end='',file=dataFile)   #correct1
+        print('NaN' , '\t', end='',file=dataFile) #resonsePosRelative
+    core.wait(1);
     return correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop
     #end handleAndScoreResponses
 
@@ -849,7 +781,7 @@ def play_high_tone_correct_low_incorrect(correct, passThisTrial=False):
     else: #incorrect
         highA.play() #low.play()
 
-myMouse = event.Mouse()
+
 expStop=False; framesSaved=0
 nDone = -1 #change to zero once start main part of experiment
 if doStaircase:
@@ -911,6 +843,7 @@ if doStaircase:
         #print('staircaseTrialN=',staircaseTrialN)
         letterSeqStream1,letterSeqStream2, cuesPos,correctAnsStream1,correctAnsStream2, ts  = do_RSVP_stim(numStreams,thisTrial['task'],thisTrial['targetLeftRightIfOne'],cue1pos, cue2lag, noisePercent/100.,staircaseTrialN)
         numCasesInterframeLong = timingCheckAndLog(ts,staircaseTrialN)
+        myWin.setMouseVisible(False)
         if thisTrial['task']=='T1':
             numRespsWanted = 1
         elif thisTrial['task']=='T1T2':
@@ -1005,12 +938,14 @@ else: #not staircase
         #end control of which block we are in 
         
         thisTrial = trials.next() #get a proper (non-staircase) trial
+        myWin.setMouseVisible(False)
         cue1pos = thisTrial['cue1pos']
         cue2lag = None
         if thisTrial['task']=="T1T2":
             cue2lag = thisTrial['cue2lag']
         numStreams = thisTrial['numStreams']
         letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2,ts  = do_RSVP_stim(numStreams,thisTrial['task'],thisTrial['targetLeftRightIfOne'],cue1pos, cue2lag, noisePercent/100.,nDone)
+        #draw fixation wait 1-1/2 ms before start of trial
         numCasesInterframeLong = timingCheckAndLog(ts,nDone)
         if thisTrial['task']=='T1':
             numRespsWanted = 1
@@ -1019,6 +954,7 @@ else: #not staircase
         responseDebug=False; responses = list(); responsesAutopilot = list();  #collect responses
         print("autopilot=",autopilot)
         lineupResponse = True
+        myMouse = event.Mouse()
         if lineupResponse:
             bothSides = True
             if thisTrial['task']=='T1':
