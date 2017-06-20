@@ -390,6 +390,8 @@ for i in range(numRespsWanted):
    dataFile.write('response'+str(i)+'\t')
    dataFile.write('correct'+str(i)+'\t')
    dataFile.write('responsePosRelative'+str(i)+'\t')
+print('letterSeqStream1'+'\t')
+print('letterSeqStream2'+'\t')
 print('timingBlips',file=dataFile)
 #end of header
 
@@ -762,10 +764,10 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print('NaN', '\t', end='', file=dataFile) #answer1
         print('NaN', '\t', end='', file=dataFile) #response1
         print('NaN' , '\t', end='',file=dataFile)   #correct1
-        print('NaN' , '\t', end='',file=dataFile) #resonsePosRelative
+        print('NaN' , '\t', end='',file=dataFile) #responsePosRelative
     core.wait(1);
     return correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop
-    #end handleAndScoreResponses
+    #end handleAndScoreResponse
 
 def play_high_tone_correct_low_incorrect(correct, passThisTrial=False):
     highA = sound.Sound('G',octave=5, sampleRate=6000, secs=.3, bits=8)
@@ -980,6 +982,8 @@ else: #not staircase
             correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop = (
                     handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,thisTrial['task'],thisTrial['targetLeftRightIfOne'],thisTrial['firstRespLRifTwo'],numStreams,letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2) )
             print('Scored response.   correct=', correct) #debug
+            print(letterSeqStream1, end='\t', file=dataFile) #in case want to do analysis of letter confusions
+            print(letterSeqStream2, end='\t', file=dataFile)
             print(numCasesInterframeLong, file=dataFile) #timingBlips, last thing recorded on each line of dataFile
             #Send a message to EEG indicating whether correct on each side. eachCorrect[0] is whether they got exactly correct the left side, eachCorrect[1] is right side
             #if send_triggers:
