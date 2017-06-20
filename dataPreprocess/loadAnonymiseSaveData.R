@@ -19,7 +19,7 @@ for (i in 1:length(foldersThisExp)) {
       file = files[j]
       fname = paste0(thisSubjectDir,"/",file)
 	    rawDataLoad=tryCatch( 
-      	    		read.table(fname,sep='\t',header=TRUE), 
+      	    		read.table(fname,sep='\t',header=TRUE, strip.white=TRUE), #strip whitespace because otherwise task has whitespaces before and after it 
       	    		error=function(e) { 
       	    	   			stop( paste0("ERROR reading the file ",fname," :",e) )
           		 } )
@@ -39,7 +39,7 @@ for (i in 1:length(foldersThisExp)) {
         }
       }
     cat(paste0(", now contains ",length(rawDataThis$trialnum)," trials ",msg))
-    if (expi==1 & i==1 & j==1) { #first file of the first subject
+    if (i==1 & j==1) { #first file of the first subject
         rawData<- rawDataThis
     } else {  #not the first file of the first subject, so combine it with previously-loaded data
         prevColNames<- colnames(rawData)
@@ -95,15 +95,12 @@ for (i in 1:length(foldersThisExp)) {
       } #if not first subject      
     }		
   }
- rawData = subset(rawData, subject != "auto") #get rid of any autopilot data
- #check data counterbalancing of this exp
- source("analysis/helpers/checkCounterbalancing.R")
- checkCombosOccurEqually(rawData, c("subject","trialnum") )
- checkCombosOccurEqually(subset(rawData,task=="T1"), c("targetLeftRightIfOne") )
- checkCombosOccurEqually(rawData, c("condition","leftOrRight") )
- checkCombosOccurEqually(rawData, c("condition","leftOrRight","offsetXYring0") ) #NO?
- checkCombosOccurEqually(rawData, c("numObjects","numTargets","speed") )  
-}
+rawData = subset(rawData, subject != "auto") #get rid of any autopilot data
+#check data counterbalancing of this exp
+source("analysis/helpers/checkCounterbalancing.R")
+checkCombosOccurEqually(rawData, c("subject","trialnum") )
+checkCombosOccurEqually(subset(rawData,task=="T1"), c("subject","targetLeftRightIfOne") )
+checkCombosOccurEqually(rawData, c("subject","task") )
 
 dat <-rawData
 #end data importation
