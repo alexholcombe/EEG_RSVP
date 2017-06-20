@@ -10,5 +10,4 @@ The dataPreprocess/loadAnonymizeSaveData.R file does what it says on the tin, pu
 
 ## Issues
 
-* Why are there NaN values for dat$responsePosRelative1?
 * Should save the whole letter sequence, nost just the letters
