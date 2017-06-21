@@ -203,13 +203,11 @@ if doStaircase:
     dlgLabelsOrdered.append('easyTrials')
     myDlg.addField('Staircase trials (default=' + str(staircaseTrials) + '):', tip="Staircase will run until this number is reached or it thinks it has precise estimate of threshold")
     dlgLabelsOrdered.append('staircaseTrials')
-    pctCompletedBreak = 101
 else:
     myDlg.addField('\tPercent noise dots=',  defaultNoiseLevel, tip=str(defaultNoiseLevel))
     dlgLabelsOrdered.append('defaultNoiseLevel')
     #myDlg.addField('Trials per condition (default=' + str(trialsPerCondition) + '):', trialsPerCondition, tip=str(trialsPerCondition))
     #dlgLabelsOrdered.append('trialsPerCondition')
-    pctCompletedBreak = 50
     
 myDlg.addText(refreshMsg1, color='Black')
 if refreshRateWrong:
@@ -383,15 +381,15 @@ if task=='T1':
     numRespsWanted = 1
 elif task=='T1T2':
     numRespsWanted = 2
-print('targetLeftRightIfOne\t',end='',file=dataFile)
+print('firstRespLRifTwo\ttargetLeftRightIfOne\t',end='',file=dataFile)
 for i in range(numRespsWanted):
    dataFile.write('answerPos'+str(i)+'\t')   #have to use write to avoid ' ' between successive text, at least until Python 3
    dataFile.write('answer'+str(i)+'\t')
    dataFile.write('response'+str(i)+'\t')
    dataFile.write('correct'+str(i)+'\t')
    dataFile.write('responsePosRelative'+str(i)+'\t')
-print('letterSeqStream1'+'\t')
-print('letterSeqStream2'+'\t')
+print('letterSeqStream1'+'\t',end='',file=dataFile)
+print('letterSeqStream2'+'\t',end='',file=dataFile)
 print('timingBlips',file=dataFile)
 #end of header
 
@@ -690,7 +688,7 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
      #Handle response, calculate whether correct, ########################################
     if autopilot or passThisTrial:
         responses = responsesAutopilot
-        if autopilot: print("autopilot and fake responses are:",responses)
+        #if autopilot: print("autopilot and fake responses are:",responses)
     correctAnswers = correctAnsStream1
     if numStreams>1:
         print('correctAnsStream1=',correctAnsStream1,'correctAnsStream2=',correctAnsStream2,'task=',task,'targetLeftRightIfOne=',targetLeftRightIfOne)
@@ -719,7 +717,7 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         if correctAnswers[cueI] == letterToNumber( responses[cueI] ):
             eachCorrect[cueI] = 1
         posThisResponse= np.where( letterToNumber(responses[cueI])==thisLetterSeq )
-        print('for cue ',cueI,' responses=',responses,'correctAnswers=',correctAnswers,'posThisResponse=',posThisResponse,' letterSeqStream1=',letterSeqStream1,' letterSeqStream2=',letterSeqStream2) #debugOFF
+        #print('for cue ',cueI,' responses=',responses,'correctAnswers=',correctAnswers,'posThisResponse=',posThisResponse,' letterSeqStream1=',letterSeqStream1,' letterSeqStream2=',letterSeqStream2) #debugOFF
         posThisResponse= posThisResponse[0] #list with potentially two entries, want first which will be array of places where the response was found in the letter sequence
         if len(posThisResponse) > 1:
             logging.error('Expected response to have occurred in only one position in stream')
@@ -732,8 +730,8 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         responsePosRelative[cueI] = posOfResponse[cueI] - cuesPos[cueI]
         eachApproxCorrect[cueI] +=   abs(responsePosRelative[cueI]) <= 3 #Vul efficacy measure of getting it right to within plus/minus 
     
-    if numStreams>1:
-        print("correctAnsStream1=",correctAnsStream1, " or ", numberToLetter(correctAnsStream1), " correctAnsStream2=",correctAnsStream2, " or ", numberToLetter(correctAnsStream2), 'correctAnswers=',correctAnswers ) #debugON
+    #if numStreams>1:
+     #   print("correctAnsStream1=",correctAnsStream1, " or ", numberToLetter(correctAnsStream1), " correctAnsStream2=",correctAnsStream2, " or ", numberToLetter(correctAnsStream2), 'correctAnswers=',correctAnswers ) #debugON
 
     print("eachCorrect=",eachCorrect) #debugOFF
     for cueI in range(len(cuesPos)): #print response stuff to dataFile
@@ -753,7 +751,7 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
             code = int(p_correct + responsePosRelative[cueI])
             print(code)
             send_trigger_to_port( code )
-        print('for cueI=',cueI,' cuesPos[cueI]=',cuesPos[cueI], ' answerCharacter=',answerCharacter, ' responses[cueI]=',responses[cueI], ' eachCorrect[cueI]=',eachCorrect[cueI],' resopnsePosRelative[cueI]= ',responsePosRelative[cueI])
+        #print('for cueI=',cueI,' cuesPos[cueI]=',cuesPos[cueI], ' answerCharacter=',answerCharacter, ' responses[cueI]=',responses[cueI], ' eachCorrect[cueI]=',eachCorrect[cueI],' resopnsePosRelative[cueI]= ',responsePosRelative[cueI])
         if task=='T1T2':
             correct = eachCorrect.all()
         elif task=='T1':
@@ -973,11 +971,11 @@ else: #not staircase
             expStop,passThisTrial,responses,responsesAutopilot = \
                     stringResponse.collectStringResponse(numRespsWanted,respPromptStim,respStim,acceptTextStim,myWin,clickSound,badKeySound,
                                                                                     requireAcceptance,autopilot,responseDebug=True)
-        print('expStop=',expStop,' passThisTrial=',passThisTrial,' responses=',responses, ' responsesAutopilot =', responsesAutopilot)
+        #print('expStop=',expStop,' passThisTrial=',passThisTrial,' responses=',responses, ' responsesAutopilot =', responsesAutopilot)
         if not expStop:
             print('main\t', end='', file=dataFile) #first thing printed on each line of dataFile
             print(nDone,'\t', end='', file=dataFile)
-            print(subject,'\t',thisTrial['task'],'\t', round(noisePercent,3),'\t', thisTrial['targetLeftRightIfOne'],'\t', end='', file=dataFile)
+            print(subject,'\t',thisTrial['task'],'\t', round(noisePercent,3),'\t', thisTrial['firstRespLRifTwo'], '\t', thisTrial['targetLeftRightIfOne'],'\t', end='', file=dataFile)
             
             correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop = (
                     handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,thisTrial['task'],thisTrial['targetLeftRightIfOne'],thisTrial['firstRespLRifTwo'],numStreams,letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2) )
@@ -1017,24 +1015,29 @@ else: #not staircase
             
             dataFile.flush(); logging.flush()
             print('nDone=', nDone,' trials.nTotal=',trials.nTotal) #' trials.thisN=',trials.thisN
-            if (trials.nTotal > 6 and nDone > 2 and nDone %
-                 ( trials.nTotal*pctCompletedBreak/100. ) ==1):  #dont modulus 0 because then will do it for last trial
-                    nextText.setText('Press "SPACE" to continue!')
-                    nextText.draw()
-                    progressMsg = 'Completed ' + str(trials.thisN) + ' of ' + str(trials.nTotal) + ' trials'  #EVA if this doesn't work, change it to progressMsg = ' '
-                    NextRemindCountText.setText(progressMsg)
-                    NextRemindCountText.draw()
-                    myWin.flip() # myWin.flip(clearBuffer=True) 
-                    waiting=True
-                    while waiting:
-                       if autopilot: break
-                       elif expStop == True:break
-                       for key in event.getKeys():      #check if pressed abort-type key
-                             if key in ['space','ESCAPE']: 
-                                waiting=False
-                             if key in ['ESCAPE']:
-                                expStop = False
-                    myWin.clearBuffer()
+            
+            pctTrialsCompletedForBreak = np.array([.6,.8])  
+            breakTrials = np.round(trials.nTotal*pctTrialsCompletedForBreak)
+            timeForTrialsRemainingMsg = np.any(trials.thisN==breakTrials)
+            if timeForTrialsRemainingMsg :  #Do BREAK
+                pctDone = round(    (1.0*trials.thisN) / (1.0*trials.nTotal)*100,  0  )
+                nextText.setText('Press "SPACE" to continue!')
+                nextText.draw()
+                progressMsg = 'Completed ' + str(trials.thisN) + ' of ' + str(trials.nTotal) + ' trials' 
+                NextRemindCountText.setText(progressMsg)
+                NextRemindCountText.draw()
+                myWin.flip() # myWin.flip(clearBuffer=True) 
+                waiting=True
+                while waiting:
+                   if autopilot: break
+                   elif expStop == True:break
+                   for key in event.getKeys():      #check if pressed abort-type key
+                         if key in ['space','ESCAPE']: 
+                            waiting=False
+                         if key in ['ESCAPE']:
+                            expStop = False
+                myWin.clearBuffer()
+            #END BREAK
             core.wait(.2); time.sleep(.2)
         #end main trials loop
 timeAndDateStr = time.strftime("%H:%M on %d %b %Y", time.localtime())
