@@ -5,7 +5,7 @@ from __future__ import print_function
 import time, sys, os, pylab
 if os.name != 'mac':
     from psychopy import parallel
-from psychopy import monitors, visual, event, data, logging, core, sound, gui, parallel
+from psychopy import monitors, visual, event, data, logging, core, sound, gui#, parallel
 import psychopy.info
 import pyo
 import numpy as np
@@ -17,7 +17,7 @@ try:
 except ImportError:
     print('Could not import from noiseStaircaseHelpers.py (you need that file to be in the same directory)')
 try: import stringResponse
-except ImportError:  print('Could not import stringResponse.py (you need that file to be in the same directory)')
+except ImportError:  print('Could not import strongResponse.py (you need that file to be in the same directory)')
 try: import letterLineupResponse
 except ImportError:  print('Could not import letterLineupResponse.py (you need that file to be in the same directory)')
 descendingPsycho = True
@@ -49,7 +49,7 @@ tasks=['T1','T1T2']; task = tasks[1]
 #same screen or external screen? Set scrn=0 if one screen. scrn=1 means display stimulus on second screen.
 #widthPix, heightPix
 quitFinder = False #if checkRefreshEtc, quitFinder becomes True
-autopilot=False
+autopilot=True
 demo=False #False
 exportImages= False #quits after one trial
 subject='Hubert' #user is prompted to enter true subject name
@@ -61,7 +61,7 @@ else:
     dataDir='.'
 timeAndDateStr = time.strftime("%d%b%Y_%H-%M", time.localtime())
 
-showRefreshMisses=True #flicker fixation at refresh rate, to visualize if frames missed
+showRefreshMisses=False #flicker fixation at refresh rate, to visualize if frames missed
 feedback=False
 autoLogging=False
 if demo:
@@ -300,13 +300,13 @@ except: #in case file missing, create inferiro click manually
 if showRefreshMisses:
     fixSizePix = 32 #2.6  #make fixation bigger so flicker more conspicuous
 else:
-    fixSizePix = 32
+    fixSizePix = 2.6
 fixColor = [1,1,1]
-if exportImages: fixColor= [0,0,0]
-fixatnNoiseTexture = np.round( np.random.rand(fixSizePix/4,fixSizePix/4) ,0 )   *1.0 #Can counterphase flicker  noise texture to create salient flicker if you break fixation
+if exportImages: fixColor= [1,1,1]
+#fixatnNoiseTexture = np.round( np.random.rand(fixSizePix/4,fixSizePix/4) ,0 )   *1.0 #Can counterphase flicker  noise texture to create salient flicker if you break fixation
 
-fixation= visual.PatchStim(myWin, tex=fixatnNoiseTexture, size=(fixSizePix,fixSizePix), units='pix', mask='circle', interpolate=False, autoLog=False)
-fixationBlank= visual.PatchStim(myWin, tex= -1*fixatnNoiseTexture, size=(fixSizePix,fixSizePix), units='pix', mask='circle', interpolate=False, autoLog=False) #reverse contrast
+#fixation= visual.PatchStim(myWin, tex=fixatnNoiseTexture, size=(fixSizePix,fixSizePix), units='pix', mask='circle', interpolate=False, autoLog=False)
+#fixationBlank= visual.PatchStim(myWin, tex= -1*fixatnNoiseTexture, size=(fixSizePix,fixSizePix), units='pix', mask='circle', interpolate=False, autoLog=False) #reverse contrast
 fixationPoint= visual.PatchStim(myWin,tex='none',colorSpace='rgb',color=(1,1,1),size=10,units='pix',autoLog=autoLogging)
 
 respPromptStim = visual.TextStim(myWin,pos=(0, -.8),colorSpace='rgb', color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging)
@@ -336,7 +336,7 @@ if doAB:
 #For the dual-stream simultaneous target
 stimListDualStream=[]
 possibleCuePositions =  np.array([7,9,11,13,15,17]) 
-for task in  ['T1','T1T2']: #T1 task is just for the single-target tasks, but both streams are presented
+for task in  ['T1', 'T1','T1T2','T1T2','T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
   for targetLeftRightIfOne in  ['left','right']: #If single target, should it be on the left or the right?
     for cuesPos in possibleCuePositions:
       for firstRespLRifTwo in ['left','right']:  #If dual target and lineup response, should left one or right one be queried first?
@@ -344,7 +344,7 @@ for task in  ['T1','T1T2']: #T1 task is just for the single-target tasks, but bo
                {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
              )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream = 13 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+trialsPerConditionDualStream =1 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
 trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
@@ -626,12 +626,12 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
     myWin.flip(); myWin.flip()
     #end preparation of stimuli
 
-    core.wait(.1);
+    core.wait(.01);
     trialClock.reset()
-    fixatnPeriodMin = 0.3
-    fixatnPeriodFrames = int(   (np.random.rand(1)/2.+fixatnPeriodMin)   *refreshRate)  #random interval between 800ms and 1.3s (changed when Fahed ran outer ring ident)
+    fixatnPeriodMin = 0.1
+    fixatnPeriodFrames = int(   (np.random.rand(1)/2+fixatnPeriodMin)   *refreshRate)  #random interval between 800ms and 1.3s (changed when Fahed ran outer ring ident)
     ts = list(); #to store time of each drawing, to check whether skipped frames
-    for i in range(fixatnPeriodFrames+20):  #prestim fixation interval
+    for i in range(fixatnPeriodFrames):  #prestim fixation interval
         #if i%4>=2 or demo or exportImages: #flicker fixation on and off at framerate to see when skip frame
         #      fixation.draw()
         #else: fixationBlank.draw()
@@ -658,7 +658,7 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
         #end fixation interval
     #myWin.setRecordFrameIntervals(True);  #can't get it to stop detecting superlong frames
     t0 = trialClock.getTime()
-    #while trial_onset + 0.492 < core.getClock(): pass
+
     for n in range(trialDurFrames): #this is the loop for this trial's stimulus!
         if numStreams==2:
             fixationPoint.draw()
@@ -764,10 +764,10 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print('NaN', '\t', end='', file=dataFile) #answer1
         print('NaN', '\t', end='', file=dataFile) #response1
         print('NaN' , '\t', end='',file=dataFile)   #correct1
-        print('NaN' , '\t', end='',file=dataFile) #responsePosRelative
+        print('NaN' , '\t', end='',file=dataFile) #resonsePosRelative
     core.wait(1);
     return correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop
-    #end handleAndScoreResponse
+    #end handleAndScoreResponses
 
 def play_high_tone_correct_low_incorrect(correct, passThisTrial=False):
     highA = sound.Sound('G',octave=5, sampleRate=6000, secs=.3, bits=8)
