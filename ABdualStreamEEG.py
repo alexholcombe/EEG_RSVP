@@ -980,8 +980,9 @@ else: #not staircase
             correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop = (
                     handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,thisTrial['task'],thisTrial['targetLeftRightIfOne'],thisTrial['firstRespLRifTwo'],numStreams,letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2) )
             print('Scored response.   correct=', correct) #debug
-            print(letterSeqStream1, end='\t', file=dataFile) #in case want to do analysis of letter confusions
-            print(letterSeqStream2, end='\t', file=dataFile)
+            #in case want to do analysis of letter confusions, print whole RSVP letter sequence
+            print(*letterSeqStream1,sep=',', end='\t', file=dataFile) #the asterisk is an unusual "unpacking" operator of python. https://stackoverflow.com/questions/15769246/pythonic-way-to-print-list-items
+            print(*letterSeqStream2,sep=',',  end='\t', file=dataFile) 
             print(numCasesInterframeLong, file=dataFile) #timingBlips, last thing recorded on each line of dataFile
             #Send a message to EEG indicating whether correct on each side. eachCorrect[0] is whether they got exactly correct the left side, eachCorrect[1] is right side
             #if send_triggers:
