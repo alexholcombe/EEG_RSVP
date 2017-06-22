@@ -152,8 +152,10 @@ def expandgrid(*itrs):
 def createNoise(proportnNoise,win,fieldWidthPix,noiseColor): 
     #noiseColor, assumes that colorSpace='rgb', triple between -1 and 1
     numDots = int(proportnNoise*fieldWidthPix*fieldWidthPix)
-    if numDots ==0:
-        return None
+    #Will create empty noise if numDots==0, so that everything works. Appropriate to equate drawing time if have noise on some trials and not on others. To change, uncomment the next two lines
+    #if numDots ==0:
+    #    return None
+    
     #create a matrix of all possible pixel locations, shuffle it, pick off the first numDots ones
     #0,0 is center of field
     possibleXcoords = -fieldWidthPix/2 + np.arange(fieldWidthPix) 

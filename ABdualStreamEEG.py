@@ -3,9 +3,7 @@
 #git remote add origin https://github.com/alexholcombe/attentional-blink.git
 from __future__ import print_function
 import time, sys, os, pylab
-if os.name != 'mac':
-    from psychopy import parallel
-from psychopy import monitors, visual, event, data, logging, core, sound, gui#, parallel
+from psychopy import monitors, visual, event, data, logging, core, sound, gui
 import psychopy.info
 import pyo
 import numpy as np
@@ -27,6 +25,11 @@ descendingPsycho = True
 # Open parallel port and make sure it is at 0
 
 send_triggers = False # see for a list of trigger codes https://docs.google.com/spreadsheets/d/1DFz8UYBf-cw3UojR7Va5u7hPOHZE05YQPRT8jkmjnmg/edit#gid=0
+if send_triggers:
+    if os.name == 'mac': #mac doesn't support parallel, would have to do some other usb thing
+        print("Not set up to send triggers from Mac; Parallel port thing won't work.")
+    else:
+        from psychopy import parallel
 if not send_triggers:
     print("WARNING not sending triggers because send_triggers FALSE")
 p_started = True                               #Whether we've started the experiment (used to determine whether to do a dummy trial after show_exit_screen)
@@ -49,7 +52,7 @@ tasks=['T1','T1T2']; task = tasks[1]
 #same screen or external screen? Set scrn=0 if one screen. scrn=1 means display stimulus on second screen.
 #widthPix, heightPix
 quitFinder = False #if checkRefreshEtc, quitFinder becomes True
-autopilot=True
+autopilot=False
 demo=False #False
 exportImages= False #quits after one trial
 subject='Hubert' #user is prompted to enter true subject name
@@ -188,7 +191,7 @@ else: #checkRefreshEtc
     myWin.allowGUI =True
 myWin.close() #have to close window to show dialog box
 
-defaultNoiseLevel = 1.00 #to use if no staircase, can be set by user
+defaultNoiseLevel = 0 #percentage (0-100). To use if no staircase, can be set by user
 dlgLabelsOrdered = list()
 if doStaircase:
     myDlg = gui.Dlg(title="Staircase to find appropriate noisePercent", pos=(200,400))
@@ -471,7 +474,7 @@ cueOffset = 6
 noiseOffsetKludge = 0.0
 ltrsDrawObjectsStream1 = list()
 ltrsDrawObjectsStream2 = list()
-for i in range(0,26): #need to add the font Sloan to computer
+for i in range(0,26): #May need to add the font Sloan to computer
        letterStream1 = visual.TextStim(myWin,pos=(-cueOffset,0),font='Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
        letterStream2 = visual.TextStim(myWin,pos=(cueOffset,0), font= 'Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
        letterStream1.setHeight( ltrHeight ); letterStream2.setHeight( ltrHeight )
@@ -598,13 +601,15 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
             cues[0].setPos([-cueOffset,0])
             cues[1].setPos([cueOffset,0])
 
+    #Set up noise
     noise = None; allFieldCoords=None; numNoiseDots=0
-    if proportnNoise > 0: #generating noise is time-consuming, so only do it once per trial. Then shuffle noise coordinates for each letter
-        (noise,allFieldCoords,numNoiseDots) = createNoise(proportnNoise,myWin,noiseFieldWidthPix, bgColor)  #for the left stream, or the only stream
-        (noise2,allFieldCoords2,numNoiseDots) = createNoise(proportnNoise,myWin,noiseFieldWidthPix, bgColor) #for the right stream
-        
+    #generating noise is time-consuming, so only do it once per trial. Then shuffle noise coordinates for each letter
+    #Currently the code goes through the motions of generating the noise even if proportnNoise==0
+    #Would have to add a lot of if statements to avoid that.  Which might speed up the code. But as of 22 June 2017, there are few timingBlips.  if proportnNoise > 0: 
+    (noise,allFieldCoords,numNoiseDots) = createNoise(proportnNoise,myWin,noiseFieldWidthPix, bgColor)  #for the left stream, or the only stream
+    (noise2,allFieldCoords2,numNoiseDots) = createNoise(proportnNoise,myWin,noiseFieldWidthPix, bgColor) #for the right stream
     
-       #Work out how to displace the noise so it will be on top of the streams, and then displace it
+    #Work out how to displace the noise so it will be on top of the streams, and then displace it
     cueOffsetInPix =  int(round(noiseOffsetKludge*cueOffset*pixelperdegree)) #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
     #print('allFieldCoords[1:3][0]=', allFieldCoords[1:3][0])
     allFieldCoords[:,0] += cueOffsetInPix  #Displace the noise to present it over the letter stream
@@ -614,7 +619,7 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
     dotCoords2 = allFieldCoords2[0:numNoiseDots] #Take the first numNoiseDots random locations to plot the dots
     noise.setXYs(dotCoords)
     noise2.setXYs(dotCoords2)
-    
+    #End setting up of noise
     preDrawStimToGreasePipeline = list() #I don't know why this works, but without drawing it I have consistent timing blip first time that draw ringInnerR for phantom contours
     for cue in cues:
         cue.setLineColor(bgColor)
