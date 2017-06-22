@@ -52,7 +52,7 @@ tasks=['T1','T1T2']; task = tasks[1]
 #same screen or external screen? Set scrn=0 if one screen. scrn=1 means display stimulus on second screen.
 #widthPix, heightPix
 quitFinder = False #if checkRefreshEtc, quitFinder becomes True
-autopilot=False
+autopilot=True
 demo=False #False
 exportImages= False #quits after one trial
 subject='Hubert' #user is prompted to enter true subject name
@@ -436,10 +436,10 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
 
   refreshNoise = False #Not recommended because takes longer than a frame, even to shuffle apparently. Or may be setXYs step
   if proportnNoise>0 and refreshNoise: 
-    if frameOfThisLetter ==0: 
+    if frameOfThisLetter ==0:  #refresh and displace the noise
         np.random.shuffle(allFieldCoords) #refresh the noise by shuffling the possible locations of noise dots
         dotCoords = allFieldCoords[0:numNoiseDots] #Take the first numNoiseDots random locations to plot the dots
-        cueOffsetInPix = noiseOffsetKludge*cueOffset*pixelperdegree #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
+        cueOffsetInPix =  int(round((1+noiseOffsetKludge)*cueOffset*pixelperdegree)) #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
         dotCoords[:,0] += cueOffsetInPix #Displace the noise to present it over the letter stream
         noise.setXYs(dotCoords)
   if proportnNoise>0:
@@ -471,7 +471,7 @@ for cueN in xrange(2):
 #predraw all 26 letters 
 ltrHeight = 3 #Martini letters were 2.5deg high
 cueOffset = 6
-noiseOffsetKludge = 0.0
+noiseOffsetKludge = -.15 #will be added to 1 and multiplied by actual offset. Probably should have multiplicative term dependent on font size
 ltrsDrawObjectsStream1 = list()
 ltrsDrawObjectsStream2 = list()
 for i in range(0,26): #May need to add the font Sloan to computer
@@ -610,11 +610,12 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
     (noise2,allFieldCoords2,numNoiseDots) = createNoise(proportnNoise,myWin,noiseFieldWidthPix, bgColor) #for the right stream
     
     #Work out how to displace the noise so it will be on top of the streams, and then displace it
-    cueOffsetInPix =  int(round(noiseOffsetKludge*cueOffset*pixelperdegree)) #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
-    #print('allFieldCoords[1:3][0]=', allFieldCoords[1:3][0])
+    #Maybe don't displace it because it gets displaced when the letter is drawn on each frame
+    cueOffsetInPix =  int(round((1+noiseOffsetKludge)*cueOffset*pixelperdegree)) #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
+    print('cueOffsetInPix=',cueOffsetInPix, 'allFieldCoords[1:3][0]=', allFieldCoords[1:3][0], 'noiseOffsetKludge=',noiseOffsetKludge, ' cueOffset=',cueOffset, 'pixelperdegree=',pixelperdegree)
+    #Displace the noise to the two letter stream locations. refreshNoise is in additional variable that determines whether it gets shuffled for each letter.
     allFieldCoords[:,0] += cueOffsetInPix  #Displace the noise to present it over the letter stream
     allFieldCoords2[:,0] -= cueOffsetInPix  #Displace the noise to present it over the letter stream
-   # print('cueOffsetInPix=',cueOffsetInPix, 'allFieldCoords[1:3][0]=', allFieldCoords[1:3][0])
     dotCoords = allFieldCoords[0:numNoiseDots] #Take the first numNoiseDots random locations to plot the dots
     dotCoords2 = allFieldCoords2[0:numNoiseDots] #Take the first numNoiseDots random locations to plot the dots
     noise.setXYs(dotCoords)
@@ -665,9 +666,6 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
     for n in range(trialDurFrames): #this is the loop for this trial's stimulus!
         if numStreams==2:
             fixationPoint.draw()
-#        worked = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
-#                                                     numStreams,ltrsDrawObjectsStream1, ltrsDrawObjectsStream2,
-#                                                     noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots) #draw letter and possibly cue and noise on top
         trigger_val = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
                                                      numStreams,ltrsDrawObjectsStream1, ltrsDrawObjectsStream2,
                                                      noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots) #draw letter and possibly cue and noise on top
