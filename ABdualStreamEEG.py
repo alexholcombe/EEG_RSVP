@@ -651,7 +651,9 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
                     elif targetLeftRightIfOne=='right':
                      send_trigger_to_port(p_startTrialSingleRight)
                 elif task== 'T1T2':
-                    if firstRespLRifTwo=='left':
+                    print('time to send T1T2 trigger, value of p_startTrialDualLeft=',p_startTrialDualLeft,
+                            ' firstRespLRifTwo=',firstRespLRifTwo,'p_startTrialDualRight=',p_startTrialDualRight)
+                    if firstRespLRiffTwo=='left':
                         send_trigger_to_port (p_startTrialDualLeft)
                     elif firstRespLRifTwo=='right':
                         send_trigger_to_port(p_startTrialDualRight)
