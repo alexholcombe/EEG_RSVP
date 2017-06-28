@@ -547,7 +547,7 @@ def send_trigger_to_port(trigger_value):
     core.wait(.002) #wait wait_time seconds to make sure the message was received
     p_port.setData(0)
     
-def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, proportnNoise,trialN):
+def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1pos, cue2lag, proportnNoise,trialN):
     #relies on global variables:
     #   logging, bgColor
     #
@@ -611,7 +611,8 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
     
     #Work out how to displace the noise so it will be on top of the streams, and then displace it
     #Maybe don't displace it because it gets displaced when the letter is drawn on each frame
-    cueOffsetInPix =  int(round((1+noiseOffsetKludge)*cueOffset*pixelperdegree)) #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
+    cueOffsetInPix =  int(round((1+noiseOffsetKludge)*cueOffset*pixelperdegree)) 
+    #Because the noise coords were drawn in pixels but the cue position is specified in deg, I muyst convert pix to deg
     print('cueOffsetInPix=',cueOffsetInPix, 'allFieldCoords[1:3][0]=', allFieldCoords[1:3][0], 'noiseOffsetKludge=',noiseOffsetKludge, ' cueOffset=',cueOffset, 'pixelperdegree=',pixelperdegree)
     #Displace the noise to the two letter stream locations. refreshNoise is in additional variable that determines whether it gets shuffled for each letter.
     allFieldCoords[:,0] += cueOffsetInPix  #Displace the noise to present it over the letter stream
@@ -651,8 +652,6 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, cue1pos, cue2lag, propo
                     elif targetLeftRightIfOne=='right':
                      send_trigger_to_port(p_startTrialSingleRight)
                 elif task== 'T1T2':
-                    print('time to send T1T2 trigger, value of p_startTrialDualLeft=',p_startTrialDualLeft,
-                            ' firstRespLRifTwo=',firstRespLRifTwo,'p_startTrialDualRight=',p_startTrialDualRight)
                     if firstRespLRiffTwo=='left':
                         send_trigger_to_port (p_startTrialDualLeft)
                     elif firstRespLRifTwo=='right':
@@ -846,7 +845,9 @@ if doStaircase:
                 print('stopping because staircase.next() returned a StopIteration, which it does when it is finished')
                 break #break out of the trials loop
         #print('staircaseTrialN=',staircaseTrialN)
-        letterSeqStream1,letterSeqStream2, cuesPos,correctAnsStream1,correctAnsStream2, ts  = do_RSVP_stim(numStreams,thisTrial['task'],thisTrial['targetLeftRightIfOne'],cue1pos, cue2lag, noisePercent/100.,staircaseTrialN)
+        letterSeqStream1,letterSeqStream2, cuesPos,correctAnsStream1,correctAnsStream2, ts  = do_RSVP_stim(numStreams,
+                        thisTrial['task'],thisTrial['targetLeftRightIfOne'],thisTrial['firstRespLRifTwo'],
+                        cue1pos, cue2lag, noisePercent/100.,staircaseTrialN)
         numCasesInterframeLong = timingCheckAndLog(ts,staircaseTrialN)
         myWin.setMouseVisible(False)
         if thisTrial['task']=='T1':
@@ -949,7 +950,9 @@ else: #not staircase
         if thisTrial['task']=="T1T2":
             cue2lag = thisTrial['cue2lag']
         numStreams = thisTrial['numStreams']
-        letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2,ts  = do_RSVP_stim(numStreams,thisTrial['task'],thisTrial['targetLeftRightIfOne'],cue1pos, cue2lag, noisePercent/100.,nDone)
+        letterSeqStream1,letterSeqStream2,cuesPos,correctAnsStream1,correctAnsStream2,ts  = do_RSVP_stim(numStreams,
+                    thisTrial['task'],thisTrial['targetLeftRightIfOne'], thisTrial['firstRespLRifTwo'],
+                    cue1pos, cue2lag, noisePercent/100.,nDone)
         #draw fixation wait 1-1/2 ms before start of trial
         numCasesInterframeLong = timingCheckAndLog(ts,nDone)
         if thisTrial['task']=='T1':
