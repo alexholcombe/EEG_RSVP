@@ -345,7 +345,7 @@ for task in  ['T1', 'T1','T1T2','T1T2','T1T2']: #T1 task is just for the single-
                {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
              )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream =1 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+trialsPerConditionDualStream =2 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
 trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
@@ -652,7 +652,7 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1p
                     elif targetLeftRightIfOne=='right':
                      send_trigger_to_port(p_startTrialSingleRight)
                 elif task== 'T1T2':
-                    if firstRespLRiffTwo=='left':
+                    if firstRespLRifTwo=='left':
                         send_trigger_to_port (p_startTrialDualLeft)
                     elif firstRespLRifTwo=='right':
                         send_trigger_to_port(p_startTrialDualRight)
