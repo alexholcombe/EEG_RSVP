@@ -337,7 +337,7 @@ if doAB:
 #For the dual-stream simultaneous target
 stimListDualStream=[]
 possibleCuePositions =  np.array([7,9,11,13,15,17]) 
-for task in  ['T1', 'T1','T1T2','T1T2','T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
+for task in  ['T1', 'T1', 'T1', 'T1T2', 'T1T2', 'T1T2','T1T2','T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
   for targetLeftRightIfOne in  ['left','right']: #If single target, should it be on the left or the right?
     for cuesPos in possibleCuePositions:
       for firstRespLRifTwo in ['left','right']:  #If dual target and lineup response, should left one or right one be queried first?
@@ -345,7 +345,7 @@ for task in  ['T1', 'T1','T1T2','T1T2','T1T2']: #T1 task is just for the single-
                {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
              )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream =2 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+trialsPerConditionDualStream =1 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
 trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
@@ -475,8 +475,10 @@ noiseOffsetKludge = -.15 #will be added to 1 and multiplied by actual offset. Pr
 ltrsDrawObjectsStream1 = list()
 ltrsDrawObjectsStream2 = list()
 for i in range(0,26): #May need to add the font Sloan to computer
-       letterStream1 = visual.TextStim(myWin,pos=(-cueOffset,0),font='Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
-       letterStream2 = visual.TextStim(myWin,pos=(cueOffset,0), font= 'Sloan', colorSpace='rgb',color=letterColor,alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
+       letterStream1 = visual.TextStim(myWin,pos=(-cueOffset,0),font='Sloan', colorSpace='rgb',color=letterColor,
+    alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
+       letterStream2 = visual.TextStim(myWin,pos=(cueOffset,0), font= 'Sloan', colorSpace='rgb',color=letterColor,
+    alignHoriz='center',alignVert='center',units='deg',autoLog=autoLogging)
        letterStream1.setHeight( ltrHeight ); letterStream2.setHeight( ltrHeight )
        letter = numberToLetter(i)
        letterStream1.setText(letter,log=False); letterStream2.setText(letter,log=False)
