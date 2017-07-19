@@ -337,7 +337,7 @@ if doAB:
 #For the dual-stream simultaneous target
 stimListDualStream=[]
 possibleCuePositions =  np.array([7,9,11,13,15,17]) 
-for task in  ['T1', 'T1', 'T1', 'T1T2', 'T1T2', 'T1T2','T1T2','T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
+for task in  ['T1', 'T1', 'T1T2', 'T1T2', 'T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
   for targetLeftRightIfOne in  ['left','right']: #If single target, should it be on the left or the right?
     for cuesPos in possibleCuePositions:
       for firstRespLRifTwo in ['left','right']:  #If dual target and lineup response, should left one or right one be queried first?
@@ -345,7 +345,7 @@ for task in  ['T1', 'T1', 'T1', 'T1T2', 'T1T2', 'T1T2','T1T2','T1T2']: #T1 task 
                {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
              )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream =1 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+trialsPerConditionDualStream =2 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
 trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
