@@ -16,7 +16,7 @@ require(ggplot2)
 #sanity check
 g=ggplot(E,   aes(x=responsePosRelative0))  
 g<-g+facet_grid(task~.)
-g<-g+geom_histogram()
+g<-g+geom_histogram(bins=34)
 g
 
 #Look at percent correct for left and right
