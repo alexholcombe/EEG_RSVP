@@ -1,0 +1,693 @@
+##### Running: D:\Documents\Lab Users\Polly\EEG experiment\ABdualStreamEEG.py #####
+pyo version 0.8.0 (uses single precision)
+"dataRaw" directory does not exist, so saving data in present working directory
+pixelperdegree= 54.2452627332
+total SOA=116.67 or 7 frames, comprising
+ISIframes =3 or 50.0 ms and letterDurFrames =4 or 66.67ms
+The syntax of the command is incorrect.
+Could not load the desired click sound file, instead using manually created inferior click
+Experiment will have 0 AB and 120  dualstream trials. Letters will be drawn with superposed noise of100.00%
+Starting dual stream part of experiment
+nDone =  0  out of  120  trials.nRemaining =  120
+numStreams =  2
+corrrectAnsStream1= 6  or  G  correctAnsStream2= 5  or  F
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [52 64] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.0139494    5.91511631]  from  deg  units first to pixels:  -661.0 279.0  then to norm:  -0.688541666667 0.516666666667
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  19
+whichResp from top =  6 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 1.22966576  0.50882721]  from  deg  units first to pixels:  58.0 24.0  then to norm:  0.0604166666667 0.0444444444444
+Clicked and state= waitingForClick
+OK= True
+Returning with response= G  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.16235734   0.50882721]  from  deg  units first to pixels:  668.0 24.0  then to norm:  0.695833333333 0.0444444444444
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.82684422  0.1272068 ]  from  deg  units first to pixels:  -39.0 6.0  then to norm:  -0.040625 0.0111111111111
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 6 correctAnsStream2= 5 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 1.  0.]
+200
+197
+Scored response.   correct= False
+13.5672 	ERROR 	trialnum=0 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 1  trials.nTotal= 120
+nDone =  1  out of  120  trials.nRemaining =  119
+numStreams =  2
+corrrectAnsStream1= 3  or  D  correctAnsStream2= 21  or  V
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [30 14] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.14115621  -4.07061768]  from  deg  units first to pixels:  667.0 -192.0  then to norm:  0.694791666667 -0.355555555556
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  8
+whichResp from top =  17 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [-0.16960907  0.1272068 ]  from  deg  units first to pixels:  -8.0 6.0  then to norm:  -0.00833333333333 0.0111111111111
+Clicked and state= waitingForClick
+OK= True
+Returning with response= R  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-13.97154714  -9.13768864]  from  deg  units first to pixels:  -659.0 -431.0  then to norm:  -0.686458333333 -0.798148148148
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  2
+whichResp from top =  23 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [ 0.93284988  0.53002834]  from  deg  units first to pixels:  44.0 25.0  then to norm:  0.0458333333333 0.0462962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= X  expStop= False
+correctAnsStream1= 3 correctAnsStream2= 21 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+202
+198
+Scored response.   correct= False
+24.6668 	ERROR 	trialnum=1 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 2  trials.nTotal= 120
+nDone =  2  out of  120  trials.nRemaining =  118
+numStreams =  2
+corrrectAnsStream1= 5  or  F  correctAnsStream2= 23  or  X
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-11  60] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.37436868  -9.13768864]  from  deg  units first to pixels:  678.0 -431.0  then to norm:  0.70625 -0.798148148148
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  2
+whichResp from top =  23 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [-0.59363174 -0.42402267]  from  deg  units first to pixels:  -28.0 -20.0  then to norm:  -0.0291666666667 -0.037037037037
+Clicked and state= waitingForClick
+OK= True
+Returning with response= X  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-14.16235734 -10.00693513]  from  deg  units first to pixels:  -668.0 -472.0  then to norm:  -0.695833333333 -0.874074074074
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  1
+whichResp from top =  24 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [ 0.78444195  0.33921814]  from  deg  units first to pixels:  37.0 16.0  then to norm:  0.0385416666667 0.0296296296296
+Clicked and state= waitingForClick
+OK= True
+Returning with response= Y  expStop= False
+correctAnsStream1= 5 correctAnsStream2= 23 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+206
+212
+Scored response.   correct= False
+34.5665 	ERROR 	trialnum=2 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 3  trials.nTotal= 120
+nDone =  3  out of  120  trials.nRemaining =  117
+numStreams =  2
+corrrectAnsStream1= 6  or  G  correctAnsStream2= 11  or  L
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [64 62] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.20475961 -10.02813626]  from  deg  units first to pixels:  670.0 -473.0  then to norm:  0.697916666667 -0.875925925926
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  1
+whichResp from top =  24 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [-0.67843628 -0.14840794]  from  deg  units first to pixels:  -32.0 -7.0  then to norm:  -0.0333333333333 -0.012962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= Y  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-14.14115621  11.08819295]  from  deg  units first to pixels:  -667.0 523.0  then to norm:  -0.694791666667 0.968518518519
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  25
+whichResp from top =  0 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [-0.91164875 -0.46642494]  from  deg  units first to pixels:  -43.0 -22.0  then to norm:  -0.0447916666667 -0.0407407407407
+Clicked and state= waitingForClick
+OK= True
+Returning with response= A  expStop= False
+correctAnsStream1= 6 correctAnsStream2= 11 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+202
+204
+Scored response.   correct= False
+44.1328 	ERROR 	trialnum=3 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 4  trials.nTotal= 120
+nDone =  4  out of  120  trials.nRemaining =  116
+numStreams =  2
+corrrectAnsStream1= 20  or  U  correctAnsStream2= 10  or  K
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [ 78 -20] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.31076528  -3.18017006]  from  deg  units first to pixels:  -675.0 -150.0  then to norm:  -0.703125 -0.277777777778
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  9
+whichResp from top =  16 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 0.72083855 -0.33921814]  from  deg  units first to pixels:  34.0 -16.0  then to norm:  0.0354166666667 -0.0296296296296
+Clicked and state= waitingForClick
+OK= True
+Returning with response= Q  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.31076528   2.65014172]  from  deg  units first to pixels:  675.0 125.0  then to norm:  0.703125 0.231481481481
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  16
+whichResp from top =  9 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-2.33212471 -0.33921814]  from  deg  units first to pixels:  -110.0 -16.0  then to norm:  -0.114583333333 -0.0296296296296
+Clicked and state= waitingForClick
+OK= True
+Returning with response= J  expStop= False
+correctAnsStream1= 20 correctAnsStream2= 10 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+201
+183
+Scored response.   correct= False
+55.2491 	ERROR 	trialnum=4 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 5  trials.nTotal= 120
+nDone =  5  out of  120  trials.nRemaining =  115
+numStreams =  2
+corrrectAnsStream1= 11  or  L  correctAnsStream2= 17  or  R
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [12 -8] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.43797208  -6.657156  ]  from  deg  units first to pixels:  681.0 -314.0  then to norm:  0.709375 -0.581481481481
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  5
+whichResp from top =  20 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [-0.40282154  0.67843628]  from  deg  units first to pixels:  -19.0 32.0  then to norm:  -0.0197916666667 0.0592592592593
+Clicked and state= waitingForClick
+OK= True
+Returning with response= U  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-13.8867426    3.09536553]  from  deg  units first to pixels:  -655.0 146.0  then to norm:  -0.682291666667 0.27037037037
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  16
+whichResp from top =  9 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [ 0.65723515  0.02120113]  from  deg  units first to pixels:  31.0 1.0  then to norm:  0.0322916666667 0.00185185185185
+Clicked and state= waitingForClick
+OK= True
+Returning with response= J  expStop= False
+correctAnsStream1= 11 correctAnsStream2= 17 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+197
+195
+Scored response.   correct= False
+68.0154 	ERROR 	trialnum=5 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 6  trials.nTotal= 120
+nDone =  6  out of  120  trials.nRemaining =  114
+numStreams =  2
+corrrectAnsStream1= 2  or  C  correctAnsStream2= 4  or  E
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-40  63] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.16235734   0.42402267]  from  deg  units first to pixels:  -668.0 20.0  then to norm:  -0.695833333333 0.037037037037
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [-0.44522381  0.14840794]  from  deg  units first to pixels:  -21.0 7.0  then to norm:  -0.021875 0.012962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.18355847   0.04240227]  from  deg  units first to pixels:  669.0 2.0  then to norm:  0.696875 0.0037037037037
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.82684422 -0.55122948]  from  deg  units first to pixels:  -39.0 -26.0  then to norm:  -0.040625 -0.0481481481481
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 2 correctAnsStream2= 4 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+195
+212
+Scored response.   correct= False
+78.3654 	ERROR 	trialnum=6 ERROR,1 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[ 25.7] and was these frames: [0]
+nDone= 7  trials.nTotal= 120
+nDone =  7  out of  120  trials.nRemaining =  113
+numStreams =  2
+corrrectAnsStream1= 13  or  N  correctAnsStream2= 9  or  J
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [52 19] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.77719022   2.26852131]  from  deg  units first to pixels:  -697.0 107.0  then to norm:  -0.726041666667 0.198148148148
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  15
+whichResp from top =  10 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [-0.63603401 -0.27561474]  from  deg  units first to pixels:  -30.0 -13.0  then to norm:  -0.03125 -0.0240740740741
+Clicked and state= waitingForClick
+OK= True
+Returning with response= K  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 13.97154714  -2.35332585]  from  deg  units first to pixels:  659.0 -111.0  then to norm:  0.686458333333 -0.205555555556
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  10
+whichResp from top =  15 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [ 0.         0.1272068]  from  deg  units first to pixels:  0.0 6.0  then to norm:  0.0 0.0111111111111
+Clicked and state= waitingForClick
+OK= True
+Returning with response= P  expStop= False
+correctAnsStream1= 13 correctAnsStream2= 9 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+202
+198
+Scored response.   correct= False
+88.3148 	ERROR 	trialnum=7 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 8  trials.nTotal= 120
+nDone =  8  out of  120  trials.nRemaining =  112
+numStreams =  2
+corrrectAnsStream1= 9  or  J  correctAnsStream2= 21  or  V
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [  5 -72] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-13.8231392    0.31801701]  from  deg  units first to pixels:  -652.0 15.0  then to norm:  -0.679166666667 0.0277777777778
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 0.95405102 -0.14840794]  from  deg  units first to pixels:  45.0 -7.0  then to norm:  0.046875 -0.012962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.03515054  -0.48762608]  from  deg  units first to pixels:  662.0 -23.0  then to norm:  0.689583333333 -0.0425925925926
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  12
+whichResp from top =  13 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [ 0.67843628 -0.48762608]  from  deg  units first to pixels:  32.0 -23.0  then to norm:  0.0333333333333 -0.0425925925926
+Clicked and state= waitingForClick
+OK= True
+Returning with response= N  expStop= False
+correctAnsStream1= 9 correctAnsStream2= 21 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+201
+186
+Scored response.   correct= False
+97.8645 	ERROR 	trialnum=8 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 9  trials.nTotal= 120
+nDone =  9  out of  120  trials.nRemaining =  111
+numStreams =  2
+corrrectAnsStream1= 13  or  N  correctAnsStream2= 21  or  V
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-39 -29] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.22596074  -3.87980747]  from  deg  units first to pixels:  -671.0 -183.0  then to norm:  -0.698958333333 -0.338888888889
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  8
+whichResp from top =  17 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 0.89044762  0.40282154]  from  deg  units first to pixels:  42.0 19.0  then to norm:  0.04375 0.0351851851852
+Clicked and state= waitingForClick
+OK= True
+Returning with response= R  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.35316754  -0.53002834]  from  deg  units first to pixels:  677.0 -25.0  then to norm:  0.705208333333 -0.0462962962963
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  12
+whichResp from top =  13 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.65723515 -0.53002834]  from  deg  units first to pixels:  -31.0 -25.0  then to norm:  -0.0322916666667 -0.0462962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= N  expStop= False
+correctAnsStream1= 13 correctAnsStream2= 21 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+201
+215
+Scored response.   correct= False
+107.6143 	ERROR 	trialnum=9 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 10  trials.nTotal= 120
+nDone =  10  out of  120  trials.nRemaining =  110
+numStreams =  2
+corrrectAnsStream1= 13  or  N  correctAnsStream2= 25  or  Z
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [69  2] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.22596074   0.59363174]  from  deg  units first to pixels:  -671.0 28.0  then to norm:  -0.698958333333 0.0518518518519
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 1.97170544  0.57243061]  from  deg  units first to pixels:  93.0 27.0  then to norm:  0.096875 0.05
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.41677094   0.61483288]  from  deg  units first to pixels:  680.0 29.0  then to norm:  0.708333333333 0.0537037037037
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.23321247  0.38162041]  from  deg  units first to pixels:  -11.0 18.0  then to norm:  -0.0114583333333 0.0333333333333
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 13 correctAnsStream2= 25 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+201
+197
+Scored response.   correct= False
+117.5639 	ERROR 	trialnum=10 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 11  trials.nTotal= 120
+nDone =  11  out of  120  trials.nRemaining =  109
+numStreams =  2
+corrrectAnsStream1= 2  or  C  correctAnsStream2= 12  or  M
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [30 56] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.33196641   9.32849885]  from  deg  units first to pixels:  -676.0 440.0  then to norm:  -0.704166666667 0.814814814815
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  23
+whichResp from top =  2 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 2.31092358 -1.33567143]  from  deg  units first to pixels:  109.0 -63.0  then to norm:  0.113541666667 -0.116666666667
+Clicked and state= waitingForClick
+OK= True
+Returning with response= C  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.22596074  -9.32849885]  from  deg  units first to pixels:  671.0 -440.0  then to norm:  0.698958333333 -0.814814814815
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  2
+whichResp from top =  23 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.1272068   0.44522381]  from  deg  units first to pixels:  -6.0 21.0  then to norm:  -0.00625 0.0388888888889
+Clicked and state= waitingForClick
+OK= True
+Returning with response= X  expStop= False
+correctAnsStream1= 2 correctAnsStream2= 12 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 1.  0.]
+200
+202
+Scored response.   correct= False
+129.2969 	ERROR 	trialnum=11 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 12  trials.nTotal= 120
+nDone =  12  out of  120  trials.nRemaining =  108
+numStreams =  2
+corrrectAnsStream1= 14  or  O  correctAnsStream2= 17  or  R
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [37 39] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.84079362   0.50882721]  from  deg  units first to pixels:  700.0 24.0  then to norm:  0.729166666667 0.0444444444444
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [ 0.67843628  0.04240227]  from  deg  units first to pixels:  32.0 2.0  then to norm:  0.0333333333333 0.0037037037037
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-13.86554147   1.92930317]  from  deg  units first to pixels:  -654.0 91.0  then to norm:  -0.68125 0.168518518519
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  15
+whichResp from top =  10 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [ 0.33921814 -1.20846462]  from  deg  units first to pixels:  16.0 -57.0  then to norm:  0.0166666666667 -0.105555555556
+Clicked and state= waitingForClick
+OK= True
+Returning with response= K  expStop= False
+correctAnsStream1= 14 correctAnsStream2= 17 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+202
+213
+Scored response.   correct= False
+140.3466 	ERROR 	trialnum=12 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 13  trials.nTotal= 120
+nDone =  13  out of  120  trials.nRemaining =  107
+numStreams =  2
+corrrectAnsStream1= 6  or  G  correctAnsStream2= 0  or  A
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [ 63 -11] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.37436868  -6.7207594 ]  from  deg  units first to pixels:  678.0 -317.0  then to norm:  0.70625 -0.587037037037
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  5
+whichResp from top =  20 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [ 0.23321247  0.14840794]  from  deg  units first to pixels:  11.0 7.0  then to norm:  0.0114583333333 0.012962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= U  expStop= False
+correctAnsStream1= 6 correctAnsStream2= 0 task= T1 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+201
+Scored response.   correct= 0.0
+149.1630 	ERROR 	trialnum=13 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 14  trials.nTotal= 120
+nDone =  14  out of  120  trials.nRemaining =  106
+numStreams =  2
+corrrectAnsStream1= 10  or  K  correctAnsStream2= 8  or  I
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [ 19 -29] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.18355847   0.50882721]  from  deg  units first to pixels:  669.0 24.0  then to norm:  0.696875 0.0444444444444
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [ 0.97525215 -1.35687256]  from  deg  units first to pixels:  46.0 -64.0  then to norm:  0.0479166666667 -0.118518518519
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-14.35316754   0.57243061]  from  deg  units first to pixels:  -677.0 27.0  then to norm:  -0.705208333333 0.05
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [-0.0636034  -0.04240227]  from  deg  units first to pixels:  -3.0 -2.0  then to norm:  -0.003125 -0.0037037037037
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 10 correctAnsStream2= 8 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+197
+210
+Scored response.   correct= False
+157.5960 	ERROR 	trialnum=14 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 15  trials.nTotal= 120
+nDone =  15  out of  120  trials.nRemaining =  105
+numStreams =  2
+corrrectAnsStream1= 2  or  C  correctAnsStream2= 17  or  R
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-68  27] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.62878228   0.29681587]  from  deg  units first to pixels:  690.0 14.0  then to norm:  0.71875 0.0259259259259
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [ 0.59363174 -1.86569977]  from  deg  units first to pixels:  28.0 -88.0  then to norm:  0.0291666666667 -0.162962962963
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+leftRight= False xOffset= 0.7
+Converted  [-15.03160382   2.67134285]  from  deg  units first to pixels:  -709.0 126.0  then to norm:  -0.738541666667 0.233333333333
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  16
+whichResp from top =  9 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= False xOffset= 0.7
+Converted  [ 0.82684422  1.20846462]  from  deg  units first to pixels:  39.0 57.0  then to norm:  0.040625 0.105555555556
+Clicked and state= waitingForClick
+OK= True
+Returning with response= J  expStop= False
+correctAnsStream1= 2 correctAnsStream2= 17 task= T1T2 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+210
+216
+Scored response.   correct= False
+171.0290 	ERROR 	trialnum=15 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 16  trials.nTotal= 120
+nDone =  16  out of  120  trials.nRemaining =  104
+numStreams =  2
+corrrectAnsStream1= 18  or  S  correctAnsStream2= 0  or  A
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-43 -52] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.56517888  -1.08125782]  from  deg  units first to pixels:  -687.0 -51.0  then to norm:  -0.715625 -0.0944444444444
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  11
+whichResp from top =  14 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 1.08125782 -0.40282154]  from  deg  units first to pixels:  51.0 -19.0  then to norm:  0.053125 -0.0351851851852
+Clicked and state= waitingForClick
+OK= True
+Returning with response= O  expStop= False
+correctAnsStream1= 18 correctAnsStream2= 0 task= T1 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+201
+Scored response.   correct= 0.0
+180.1120 	ERROR 	trialnum=16 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 17  trials.nTotal= 120
+nDone =  17  out of  120  trials.nRemaining =  103
+numStreams =  2
+corrrectAnsStream1= 14  or  O  correctAnsStream2= 12  or  M
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [39 69] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.0775528    0.63603401]  from  deg  units first to pixels:  664.0 30.0  then to norm:  0.691666666667 0.0555555555556
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [ 0.02120113  0.02120113]  from  deg  units first to pixels:  1.0 1.0  then to norm:  0.00104166666667 0.00185185185185
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 14 correctAnsStream2= 12 task= T1 targetLeftRightIfOne= right
+eachCorrect= [ 1.  0.]
+200
+Scored response.   correct= 1.0
+187.7451 	ERROR 	trialnum=17 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 18  trials.nTotal= 120
+nDone =  18  out of  120  trials.nRemaining =  102
+numStreams =  2
+corrrectAnsStream1= 7  or  H  correctAnsStream2= 17  or  R
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-25  53] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 14.05635167  -8.92567731]  from  deg  units first to pixels:  663.0 -421.0  then to norm:  0.690625 -0.77962962963
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  2
+whichResp from top =  23 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= 1 xOffset= 0.7
+Converted  [-3.62539387  1.80209637]  from  deg  units first to pixels:  -171.0 85.0  then to norm:  -0.178125 0.157407407407
+Clicked and state= waitingForClick
+OK= True
+Returning with response= X  expStop= False
+correctAnsStream1= 7 correctAnsStream2= 17 task= T1 targetLeftRightIfOne= right
+eachCorrect= [ 0.  0.]
+198
+Scored response.   correct= 0.0
+195.0782 	ERROR 	trialnum=18 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 19  trials.nTotal= 120
+nDone =  19  out of  120  trials.nRemaining =  101
+numStreams =  2
+corrrectAnsStream1= 5  or  F  correctAnsStream2= 11  or  L
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-52 -60] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.31076528  -9.62531472]  from  deg  units first to pixels:  -675.0 -454.0  then to norm:  -0.703125 -0.840740740741
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  2
+whichResp from top =  23 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 1.42047596 -0.16960907]  from  deg  units first to pixels:  67.0 -8.0  then to norm:  0.0697916666667 -0.0148148148148
+Clicked and state= waitingForClick
+OK= True
+Returning with response= X  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.43797208  -8.39564896]  from  deg  units first to pixels:  681.0 -396.0  then to norm:  0.709375 -0.733333333333
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  3
+whichResp from top =  22 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-0.29681587 -0.74203968]  from  deg  units first to pixels:  -14.0 -35.0  then to norm:  -0.0145833333333 -0.0648148148148
+Clicked and state= waitingForClick
+OK= True
+Returning with response= W  expStop= False
+correctAnsStream1= 5 correctAnsStream2= 11 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+199
+191
+Scored response.   correct= False
+202.9446 	ERROR 	trialnum=19 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 20  trials.nTotal= 120
+nDone =  20  out of  120  trials.nRemaining =  100
+numStreams =  2
+corrrectAnsStream1= 24  or  Y  correctAnsStream2= 11  or  L
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-11 -34] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+time to send T1T2 trigger, value of p_startTrialDualLeft= 3  firstRespLRifTwo= right p_startTrialDualRight= 4
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-14.39556981   1.52648163]  from  deg  units first to pixels:  -679.0 72.0  then to norm:  -0.707291666667 0.133333333333
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  14
+whichResp from top =  11 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [-0.14840794 -0.04240227]  from  deg  units first to pixels:  -7.0 -2.0  then to norm:  -0.00729166666667 -0.0037037037037
+Clicked and state= waitingForClick
+OK= True
+Returning with response= L  expStop= False
+leftRight= True xOffset= 0.7
+Converted  [ 14.26836301   0.40282154]  from  deg  units first to pixels:  673.0 19.0  then to norm:  0.701041666667 0.0351851851852
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  13
+whichResp from top =  12 xOffsetThis= 0.7  About to redraw and draw one item in red
+leftRight= True xOffset= 0.7
+Converted  [-2.20491791  1.67488957]  from  deg  units first to pixels:  -104.0 79.0  then to norm:  -0.108333333333 0.146296296296
+Clicked and state= waitingForClick
+OK= True
+Returning with response= M  expStop= False
+correctAnsStream1= 24 correctAnsStream2= 11 task= T1T2 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+202
+194
+Scored response.   correct= False
+211.9778 	ERROR 	trialnum=20 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 21  trials.nTotal= 120
+nDone =  21  out of  120  trials.nRemaining =  99
+numStreams =  2
+corrrectAnsStream1= 25  or  Z  correctAnsStream2= 11  or  L
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [52 50] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 0 xOffset= 0.7
+Converted  [-13.90794374  -0.14840794]  from  deg  units first to pixels:  -656.0 -7.0  then to norm:  -0.683333333333 -0.012962962963
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  12
+whichResp from top =  13 xOffsetThis= -0.7  About to redraw and draw one item in red
+leftRight= 0 xOffset= 0.7
+Converted  [ 2.31092358  0.0636034 ]  from  deg  units first to pixels:  109.0 3.0  then to norm:  0.113541666667 0.00555555555556
+Clicked and state= waitingForClick
+OK= True
+Returning with response= N  expStop= False
+correctAnsStream1= 25 correctAnsStream2= 11 task= T1 targetLeftRightIfOne= left
+eachCorrect= [ 0.  0.]
+199
+Scored response.   correct= 0.0
+220.7441 	ERROR 	trialnum=21 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+nDone= 22  trials.nTotal= 120
+nDone =  22  out of  120  trials.nRemaining =  98
+numStreams =  2
+corrrectAnsStream1= 11  or  L  correctAnsStream2= 2  or  C
+cueOffsetInPix= 277 allFieldCoords[1:3][0]= [-4 43] noiseOffsetKludge= -0.15  cueOffset= 6 pixelperdegree= 54.2452627332
+autopilot= False
+leftRight= 1 xOffset= 0.7
+Converted  [ 13.80193807  -0.89044762]  from  deg  units first to pixels:  651.0 -42.0  then to norm:  0.678125 -0.0777777777778
+Clicked and state= waitingForFirstClick
+whichResp from bottom =  11
+whichResp from top =  14 xOffsetThis= 0.7  About to redraw and draw one item in red
+Returning with response= O  expStop= True
+Finishing at 19:03 on 27 Jun 2017
+227.3439 	ERROR 	trialnum=22 ERROR,0 frames were longer than 20.8 ms apparently screen refreshes skipped, interframe durs were:[] and was these frames: []
+user aborted experiment on keypress with trials done=22 of 121
+Of 22 trials, on 4.54545454545% of all trials all targets reported exactly correct
+All targets approximately correct in 22.7% of trials
+228.2799 	ERROR 	user aborted experiment on keypress with trials done=22 of 121

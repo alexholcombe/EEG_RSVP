@@ -337,7 +337,7 @@ if doAB:
 #For the dual-stream simultaneous target
 stimListDualStream=[]
 possibleCuePositions =  np.array([7,9,11,13,15,17]) 
-for task in  ['T1', 'T1', 'T1', 'T1T2', 'T1T2', 'T1T2', 'T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
+for task in  ['T1', 'T1', 'T1T2', 'T1T2', 'T1T2']: #T1 task is just for the single-target tasks, but both streams are presented 40% T1 60$ T1T2
   for targetLeftRightIfOne in  ['left','right']: #If single target, should it be on the left or the right?
     for cuesPos in possibleCuePositions:
       for firstRespLRifTwo in ['left','right']:  #If dual target and lineup response, should left one or right one be queried first?
@@ -358,7 +358,7 @@ def instructions():
     Instructions2 = visual.TextStim(myWin, text = "Please keep your eyes on the white fixation square during the trial and try not to blink."
 ,pos=(0, -.20),colorSpace='rgb',color=(1,1,1), alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions2b = visual.TextStim(myWin, text = """During the response portion of the experiment feel free to move your eyes and blink. 
-Whenever the fixation point is present please sit as still as possible with no eye, head and body movement"""
+Whenever the fixation point is present please sit as still as possible with minimal eye, head and body movement"""
 ,pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions3 = visual.TextStim(myWin, text = "Press Space to Continue",pos=(0, -.9), colorSpace='rgb',color=(0,0,0),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions4b = visual.TextStim(myWin, text = "On each trial, two letter streams either side of the fixation square will be presented with each letter flashing for a fraction of a second.",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
@@ -975,11 +975,12 @@ else: #not staircase
     phasesMsg = 'Experiment will have '+str(trialsAB.nTotal if doAB else 0)+ ' AB and ' + str(trialsDualStream.nTotal) + '  dualstream trials. Letters will be drawn with superposed noise of' + "{:.2%}".format(defaultNoiseLevel)
     print(phasesMsg); logging.info(phasesMsg)
     nDone =0
+#    while nDone < trials.nTotal and expStop==False: #MAIN EXPERIMENT LOOP
     if nDone==0:
         msg='Starting main (non-staircase) part of experiment'
         logging.info(msg); print(msg)
         instructions()
-    ABfirst = False
+        ABfirst = False
     nDone =0
     totalTrials = 0
     if ABfirst and trialsAB != None:
