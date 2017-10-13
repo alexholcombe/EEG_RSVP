@@ -74,7 +74,8 @@ prefaceStaircaseTrialsN = 20 #22
 prefaceStaircaseNoise = np.array([5,20,20,20, 50,50,50,5,80,80,80,5,95,95,95]) #will be recycled / not all used, as needed
 threshCriterion = 0.58
 bgColor = [-.7,-.7,-.7] # [-1,-1,-1]
-cueColor = [1.,1.,1.]
+cueRingColor = [.9,-1.,-1.]
+distractorRingColor = [-1,.9,-1]
 letterColor = [1.,1.,1.]
 cueRadius = 2.5 #6 deg, as in Martini E2    Letters should have height of 2.5 deg
 widthPix= 1920 #1440 # #monitor width in pixels of Agosta
@@ -456,7 +457,7 @@ print('timingBlips',file=dataFile)
 
 def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
                                         numStreams,ltrsDrawObjectsStream1,ltrsDrawObjectsStream2,
-                                        noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots ): 
+                                        noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots, cueRingColor, distractorRingColor ): 
 #defining a function to draw each frame of stim. 
 
   SOAframes = letterDurFrames+ISIframes
@@ -469,11 +470,11 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
   thisLetterIdx2 = letterSeqStream2[letterN] #which letter, from A to Z (1 to 26), should be shown?
   cuesTimeToDraw = list([False])*len(cues) #if don't use this, for AB task, bg color T2 cue will be drawn on top of T1 cue
   for cue in cues: #might be at same time, or different times
-    cue.setLineColor( bgColor )
+    cue.setLineColor( distractorRingColor )
   for cueN in xrange(len(cuesPos)): #For each cue, see whether it is time to draw it
     thisCueFrameStart = cueFrames[cueN]
     if n>=thisCueFrameStart and n<thisCueFrameStart+cueDurFrames:
-        cues[cueN].setLineColor( cueColor )
+        cues[cueN].setLineColor( cueRingColor )
         cuesTimeToDraw[cueN] = True
 
     for cueN in xrange(len(cues)):
@@ -517,7 +518,7 @@ for cueN in xrange(2):
                  radius=cueRadius,#Martini used circles with diameter of 12 deg
                  lineColorSpace = 'rgb',
                  lineColor=bgColor,
-                 lineWidth=2.0, #in pixels
+                 lineWidth=4.0, #in pixels
                  units = 'deg',
                  fillColorSpace = 'rgb',
                  fillColor=None, #beware, with convex shapes fill colors don't work
@@ -581,7 +582,7 @@ def timingCheckAndLog(ts,trialN):
                         if idx+1<len(interframeIntervs):  flankingAlso.append(idx+1)
                         else: flankingAlso.append(np.NaN)
                     flankingAlso = np.array(flankingAlso)
-                    flankingAlso = flankingAlso[np.negative(np.isnan(flankingAlso))]  #remove nan values
+                    flankingAlso = flankingAlso[~(np.isnan(flankingAlso))]  #remove nan values
                     flankingAlso = flankingAlso.astype(np.integer) #cast as integers, so can use as subscripts
                     logging.info( 'flankers also='+str( np.around( interframeIntervs[flankingAlso], 1) )  ) #because this is not an essential error message, as previous one already indicates error
                       #As INFO, at least it won't fill up the console when console set to WARNING or higher
@@ -727,9 +728,10 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1p
     for n in range(trialDurFrames): #this is the loop for this trial's stimulus!
         if numStreams==2:
             fixationPoint.draw()
+        #draw letter and possibly cue and noise on top
         trigger_val = oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,letterDurFrames,ISIframes,cuesPos,
                                                      numStreams,ltrsDrawObjectsStream1, ltrsDrawObjectsStream2,
-                                                     noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots) #draw letter and possibly cue and noise on top
+                                                     noise,noise2,proportnNoise,allFieldCoords,allFieldCoords2,numNoiseDots, cueRingColor, distractorRingColor )
         if exportImages:
             myWin.getMovieFrame(buffer='back') #for later saving
             framesSaved +=1              
