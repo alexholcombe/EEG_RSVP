@@ -10,5 +10,10 @@ The dataPreprocess/loadAnonymizeSaveData.R file does what it says on the tin, pu
 
 ## Issues
 
+* Currently, in the single-target trial, the distractor ring around the other stream
+* Also need to check AB compatibility of program now
+* Reduce to 15 letters (Polly to ask Chris Bush which ones invariant under transformations)
+* Modify program so can run single-stream at fovea for first experiment
+	* Check lineup - put it at center
 * Why is there noise on the fixation point?
 

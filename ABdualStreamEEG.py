@@ -470,7 +470,12 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
   thisLetterIdx2 = letterSeqStream2[letterN] #which letter, from A to Z (1 to 26), should be shown?
   cuesTimeToDraw = list([False])*len(cues) #if don't use this, for AB task, bg color T2 cue will be drawn on top of T1 cue
   for cue in cues: #might be at same time, or different times
-    cue.setLineColor( distractorRingColor )
+    cue.setLineColor( bgColor )
+  alwaysRingLtr = True
+  if alwaysRingLtr: #present a ring around every letter of cued streams, including (temporal) distractor letters
+    if showLetter: #if not in ISI interval
+        for cue in cues:
+            cue.setLineColor( distractorRingColor )
   for cueN in xrange(len(cuesPos)): #For each cue, see whether it is time to draw it
     thisCueFrameStart = cueFrames[cueN]
     if n>=thisCueFrameStart and n<thisCueFrameStart+cueDurFrames:
@@ -478,7 +483,7 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
         cuesTimeToDraw[cueN] = True
 
     for cueN in xrange(len(cues)):
-        if cuesTimeToDraw[cueN] == True:
+        #if cuesTimeToDraw[cueN] == True:
             cues[cueN].draw()
   if showLetter:
      ltrsDrawObjectsStream1[thisLetterIdx].setColor( letterColor )
@@ -518,7 +523,7 @@ for cueN in xrange(2):
                  radius=cueRadius,#Martini used circles with diameter of 12 deg
                  lineColorSpace = 'rgb',
                  lineColor=bgColor,
-                 lineWidth=4.0, #in pixels
+                 lineWidth=8.0, #in pixels
                  units = 'deg',
                  fillColorSpace = 'rgb',
                  fillColor=None, #beware, with convex shapes fill colors don't work
