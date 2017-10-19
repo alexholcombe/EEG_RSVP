@@ -125,6 +125,8 @@ if quitFinder:
 
 #letter size 2.5 deg
 numLettersToPresent = 16  #26
+letterPool = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'] #,'Q','R','S','T','U','V','W','X','Y','Z']
+
 SOAms =  133 #1000     #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
 #Minimum SOAms should be 84  because any shorter, I can't always notice the second ring when lag1.   71 in Martini E2 and E1b (actually he used 66.6 but that's because he had a crazy refresh rate of 90 Hz)
 letterDurMs = 80 #500    #  #23.6  in Martini E2 and E1b (actually he used 22.2 but that's because he had a crazy refresh rate of 90 Hz)
@@ -619,18 +621,19 @@ def send_trigger_to_port(trigger_value):
     core.wait(.002) #wait wait_time seconds to make sure the message was received
     p_port.setData(0)
 
-
-
 def convertPoolIdxToWhichLtrOfAlphabet(indices):
     #convert pool index to which letter of alphabet (0 for 'A', 1 for 'B', etc.)
-    letterPool = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    print('indices=',indices)
+    #relies on global variable letterPool
+    if numLettersToPresent != len(letterPool):
+        print('numLettersToPresent != len(letterPool)')
+        core.quit()
+    #print('indices=',indices)
     for i in xrange( len(indices) ):
         idx = indices[i]
         letter = letterPool[idx]
         alphabetIndex = ord(letter) - 65
         indices[i] = alphabetIndex
-    print('indices after conversion=',indices)
+    #print('indices after conversion=',indices)
     return indices
         
 def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1pos, cue2lag, proportnNoise,trialN):
@@ -1066,8 +1069,8 @@ else: #not staircase
                 sideFirst = thisTrial['targetLeftRightIfOne']
             else:
                 sideFirst = thisTrial['firstRespLRifTwo']
-            alphabet = list(string.ascii_uppercase)
-            possibleResps = alphabet
+            #alphabet = list(string.ascii_uppercase)
+            possibleResps =  letterPool #alphabet
             #possibleResps.remove('C'); possibleResps.remove('V')
             expStop,passThisTrial,responses,responsesAutopilot = \
                 letterLineupResponse.doLineup(myWin,myMouse,clickSound,badKeySound,possibleResps,lineupXoffset,bothSides,sideFirst,autopilot)
