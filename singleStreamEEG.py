@@ -78,9 +78,9 @@ cueRingColor = [1,-1.,-1.]
 distractorRingColor = [-1,.8,-1]
 letterColor = [1.,1.,1.]
 cueRadius =  3 #6 deg in Martini E2    Letters should have height of 2.5 deg
-widthPix= 1920 #1440 # #monitor width in pixels of Agosta
-heightPix= 1080 #900 # #800 #monitor height in pixels
-monitorwidth = 40.5 #monitor width in cm
+widthPix= 2880 #1440 # #monitor width in pixels of Agosta
+heightPix= 1800 #900 # #800 #monitor height in pixels
+monitorwidth = 34.5 #monitor width in cm
 scrn=0 #0 to use main screen, 1 to use external screen connected to computer
 fullscr=False #True to use fullscreen, False to not. Timing probably won't be quite right if fullscreen = False
 allowGUI = False
@@ -125,9 +125,9 @@ if quitFinder:
 
 #letter size 2.5 deg
 numLettersToPresent = 16  #26
-letterPool = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'] #,'Q','R','S','T','U','V','W','X','Y','Z']
-
-SOAms =  133 #1000     #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
+#letterPool = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+letterPool = ['A','B','C','D','E','F','G','J','K','L','Q','R','T','U','V','Y']
+SOAms = 200 #1000     #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
 #Minimum SOAms should be 84  because any shorter, I can't always notice the second ring when lag1.   71 in Martini E2 and E1b (actually he used 66.6 but that's because he had a crazy refresh rate of 90 Hz)
 letterDurMs = 80 #500    #  #23.6  in Martini E2 and E1b (actually he used 22.2 but that's because he had a crazy refresh rate of 90 Hz)
 
@@ -338,7 +338,7 @@ if doAB:
     trialsForPossibleStaircase = data.TrialHandler(stimListAB,trialsPerCondition) #independent randomization, just to create random trials for staircase phase
 
 stimListSingleStream = []
-trialsPerCondition  = 1 #4 #default value
+trialsPerCondition  = 15 #4 #default value
 possibleCue1positions =  np.array([5,7,9,11])  #used in Martini E2, group 2 lizzy double check this
 for cue1pos  in possibleCue1positions:
         stimListSingleStream.append( {'targetLeftRightIfOne':'left','numStreams':1, 'task':'T1', 'cue1pos':cue1pos, 
@@ -366,15 +366,15 @@ def instructions():
     instrcolor = 'white'
     preInstructions = visual.TextStim(myWin, text = "Press a key to see the instructions",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions1 = visual.TextStim(myWin, text = "Instructions",pos=(0, .8),colorSpace='rgb',color=(0,0,0),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
-    Instructions2 = visual.TextStim(myWin, text = "Please keep your eyes on the white fixation square during the trial and try not to blink."
+    Instructions2 = visual.TextStim(myWin, text = "Please keep your eyes on the white fixation square at the beginning of the trial. During the trial try not to blink."
 ,pos=(0, -.20),colorSpace='rgb',color=(1,1,1), alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions2b = visual.TextStim(myWin, text = """During the response portion of the experiment feel free to move your eyes and blink. 
 Whenever the fixation point is present please sit as still as possible with no eye, head and body movement"""
 ,pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions3 = visual.TextStim(myWin, text = "Press Space to Continue",pos=(0, -.9), colorSpace='rgb',color=(0,0,0),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
-    Instructions4b = visual.TextStim(myWin, text = "On each trial, two letter streams either side of the fixation square will be presented with each letter flashing for a fraction of a second.",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
-    Instructions5b = visual.TextStim(myWin, text = "Either one or both streams will contain a letter outlined with white circles on each trial. Try to remember these letters.",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )        
-    Instructions6 = visual.TextStim(myWin, text = "After the letter streams, you will need to select the letters you just saw by clicking the letters on the screen. \nSome of the trials will require you to choose the left letter first. \nOthers will require you to choose the right one first.", pos=(0,0), colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
+    Instructions4b = visual.TextStim(myWin, text = "On each trial one letter stream will appear in the center of the screen surrounded by a coloured circle (e.g. red or green).",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
+    Instructions5b = visual.TextStim(myWin, text = "For one of the letters the circle will change colour (e.g. red or green)",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )        
+    Instructions6 = visual.TextStim(myWin, text = "After the letter streams, you will need to select the letter that was the target. ", pos=(0,0), colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions7 = visual.TextStim(myWin, text = "Press a key to begin the experiment",pos=(0, 0), colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions9 = visual.TextStim(myWin, text = "If you have any questions, ask the experimenter now.",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
     Instructions10 = visual.TextStim(myWin, text = "If you don't know the letter, you can guess.",pos=(0, 0),colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.1,units='norm',autoLog=autoLogging )
