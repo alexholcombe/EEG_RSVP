@@ -124,7 +124,7 @@ if quitFinder:
     os.system(shellCmd)
 
 #letter size 2.5 deg
-numLettersToPresent = 26
+numLettersToPresent = 16  #26
 SOAms =  133 #1000     #Battelli, Agosta, Goodbourn, Holcombe mostly using 133
 #Minimum SOAms should be 84  because any shorter, I can't always notice the second ring when lag1.   71 in Martini E2 and E1b (actually he used 66.6 but that's because he had a crazy refresh rate of 90 Hz)
 letterDurMs = 80 #500    #  #23.6  in Martini E2 and E1b (actually he used 22.2 but that's because he had a crazy refresh rate of 90 Hz)
@@ -337,7 +337,7 @@ if doAB:
 
 stimListSingleStream = []
 trialsPerCondition  = 1 #4 #default value
-possibleCue1positions =  np.array([7,9,11,13,15,17])  #used in Martini E2, group 2 lizzy double check this
+possibleCue1positions =  np.array([5,7,9,11])  #used in Martini E2, group 2 lizzy double check this
 for cue1pos  in possibleCue1positions:
         stimListSingleStream.append( {'targetLeftRightIfOne':'left','numStreams':1, 'task':'T1', 'cue1pos':cue1pos, 
                                                             'firstRespLRifTwo':'left' } ) 
@@ -525,7 +525,7 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
 cues = list()
 for cueN in xrange(2):
     cue = visual.Circle(myWin, 
-                 radius=3*cueRadius,
+                 radius=cueRadius,
                  lineColorSpace = 'rgb',
                  lineColor=bgColor,
                  lineWidth=8.0, #in pixels
@@ -618,7 +618,21 @@ def send_trigger_to_port(trigger_value):
     p_port.setData(trigger_value)
     core.wait(.002) #wait wait_time seconds to make sure the message was received
     p_port.setData(0)
-    
+
+
+
+def convertPoolIdxToWhichLtrOfAlphabet(indices):
+    #convert pool index to which letter of alphabet (0 for 'A', 1 for 'B', etc.)
+    letterPool = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    print('indices=',indices)
+    for i in xrange( len(indices) ):
+        idx = indices[i]
+        letter = letterPool[idx]
+        alphabetIndex = ord(letter) - 65
+        indices[i] = alphabetIndex
+    print('indices after conversion=',indices)
+    return indices
+        
 def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1pos, cue2lag, proportnNoise,trialN):
     #relies on global variables:
     #   logging, bgColor
@@ -631,12 +645,16 @@ def do_RSVP_stim(numStreams, task, targetLeftRightIfOne, firstRespLRifTwo, cue1p
         cuesPos.append(cue1pos+cue2lag)
     #target on only one side will be task 'T1' so only one cue
     cuesPos = np.array(cuesPos)
-    letterSeqStream1 = np.arange(0,26)
-    letterSeqStream2 = np.arange(0,26)
+    letterSeqStream1 = np.arange(0,numLettersToPresent)
+    letterSeqStream2 = np.arange(0,numLettersToPresent)
     np.random.shuffle(letterSeqStream1)
     np.random.shuffle(letterSeqStream2)
-    while (letterSeqStream1==letterSeqStream2).any():
+    while (letterSeqStream1==letterSeqStream2).any(): #cross-stream repetition prohibited
         np.random.shuffle(letterSeqStream2)
+    #letterSeqStream is now an index into letterPool.  Now must convert to integer indicating which letter of the alphabet it is.
+    letterSeqStream1 = convertPoolIdxToWhichLtrOfAlphabet(letterSeqStream1)
+    letterSeqStream2 = convertPoolIdxToWhichLtrOfAlphabet(letterSeqStream2)
+
     
     if numStreams ==1:
         if targetLeftRightIfOne=='left':
@@ -940,7 +958,7 @@ if doStaircase:
             print(staircaseTrialN,'\t', end='', file=dataFile) #first thing printed on each line of dataFile
             print(subject,'\t',thisTrial['task'],'\t', round(noisePercent,2),'\t', end='', file=dataFile)
             correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop = (
-                    handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,thisTrial['task'],thisTrial['targetLeftRightIfOne'],letterSequence,cuesPos,correctAnswers) )
+                    handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,thisTrial['task'],thisTrial['targetLeftRightIfOne'],letterSeqStream1,cuesPos,correctAnswers) )
             print(numCasesInterframeLong, file=dataFile) #timingBlips, last thing recorded on each line of dataFile
             core.wait(.06)
             if feedback: 
