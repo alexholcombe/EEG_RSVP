@@ -74,10 +74,10 @@ prefaceStaircaseTrialsN = 20 #22
 prefaceStaircaseNoise = np.array([5,20,20,20, 50,50,50,5,80,80,80,5,95,95,95]) #will be recycled / not all used, as needed
 threshCriterion = 0.58
 bgColor = [-.7,-.7,-.7] # [-1,-1,-1]
-cueRingColor = [.9,-1.,-1.]
-distractorRingColor = [-1,.9,-1]
+cueRingColor = [1,-1.,-1.]
+distractorRingColor = [-1,.8,-1]
 letterColor = [1.,1.,1.]
-cueRadius =  7 #2.5 #6 deg in Martini E2    Letters should have height of 2.5 deg
+cueRadius =  3 #6 deg in Martini E2    Letters should have height of 2.5 deg
 widthPix= 1920 #1440 # #monitor width in pixels of Agosta
 heightPix= 1080 #900 # #800 #monitor height in pixels
 monitorwidth = 40.5 #monitor width in cm
@@ -525,14 +525,15 @@ def  oneFrameOfStim( n,cues,letterSeqStream1,letterSeqStream2,cueDurFrames,lette
 cues = list()
 for cueN in xrange(2):
     cue = visual.Circle(myWin, 
-                 radius=cueRadius,#Martini used circles with diameter of 12 deg
+                 radius=3*cueRadius,
                  lineColorSpace = 'rgb',
                  lineColor=bgColor,
-                 lineWidth=1, #8.0, #in pixels
+                 lineWidth=8.0, #in pixels
                  units = 'deg',
                  fillColorSpace = 'rgb',
                  fillColor=None, #beware, with convex shapes fill colors don't work
                  pos= [0,0], #the anchor (rotation and vertices are position with respect to this)
+                 edges = 128, #default is 32, which looks jaggy
                  interpolate=True,
                  autoLog=False)#this stim changes too much for autologging to be useful
     cues.append(cue)

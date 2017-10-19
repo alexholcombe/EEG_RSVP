@@ -81,6 +81,8 @@ def collectOneLineupResponse(myWin,myMouse,drawBothSides,leftRight,OKtextStim,OK
    sideIndicatorX = .77*(xOffset if leftRight else -xOffset)
    sideIndicator.setPos( [sideIndicatorX, 0] )
    chosenLtr = visual.TextStim(myWin,colorSpace='rgb',color=(1,1,1),alignHoriz='center', alignVert='center',height=.4,units='norm',autoLog=False)
+   if xOffset ==0:
+    sideIndicatorX = .22 #Offset so not drawn on top of the array
    chosenLtr.setPos( [sideIndicatorX,0] )
    
    whichResp = -1
@@ -166,6 +168,9 @@ def doLineup(myWin,myMouse,clickSound,badClickSound,possibleResps,xOffset,bothSi
     else:
         OKrespZone = visual.GratingStim(myWin, tex="sin", mask="gauss", texRes=64, units='norm', size=[.5, .5], sf=[0, 0], name='OKrespZone')
         OKtextStim = visual.TextStim(myWin,pos=(0, 0),colorSpace='rgb',color=(-1,-1,-1),alignHoriz='center', alignVert='center',height=.13,units='norm',autoLog=False)
+        if xOffset == 0:
+            OKtextStim.pos = (.22,0) #offset so not drawn on top of central lineup
+            OKrespZone.pos = (.22,0)
         OKtextStim.setText('OK')
         whichResp0, expStop = \
                 collectOneLineupResponse(myWin,myMouse,bothSides,leftRightFirst,OKtextStim,OKrespZone,possibleResps, xOffset, clickSound, badClickSound)
@@ -221,6 +226,7 @@ if __name__=='__main__':  #Running this file directly, must want to test functio
     responseDebug=False; responses = list(); responsesAutopilot = list();
     expStop = False
     
+    #Two arrays
     passThisTrial = False
     responsesAutopilot = ' '
     myMouse = event.Mouse()
@@ -229,6 +235,16 @@ if __name__=='__main__':  #Running this file directly, must want to test functio
     expStop,passThisTrial,responses,responsesAutopilot = \
                 doLineup(myWin, myMouse, clickSound, badClickSound, possibleResps, .7, bothSides, leftRightFirst, autopilot)
 
+    #One array
+    passThisTrial = False
+    responsesAutopilot = ' '
+    myMouse = event.Mouse()
+    bothSides = False
+    xOffset = 0
+    expStop,passThisTrial,responses,responsesAutopilot = \
+                doLineup(myWin, myMouse, clickSound, badClickSound, possibleResps, xOffset, bothSides, leftRightFirst, autopilot)
+                
+                
     print('autopilot=',autopilot, 'responses=',responses)
     print('expStop=',expStop,' passThisTrial=',passThisTrial,' responses=',responses, ' responsesAutopilot =', responsesAutopilot)
     print('Finished') 
