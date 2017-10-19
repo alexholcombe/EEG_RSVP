@@ -99,7 +99,8 @@ def collectOneLineupResponse(myWin,myMouse,drawBothSides,leftRight,OKtextStim,OK
             OKrespZone.draw()
             OKtextStim.draw()
         else:
-            sideIndicator.draw()
+            if xOffset != 0:
+                sideIndicator.draw()
             
         myWin.flip()
         #poll keyboard and mouse
@@ -147,7 +148,7 @@ def collectOneLineupResponse(myWin,myMouse,drawBothSides,leftRight,OKtextStim,OK
    print('Returning with response=',response,' expStop=',expStop)
    return response, expStop
             
-def doLineup(myWin,myMouse,clickSound,badClickSound,possibleResps,bothSides,leftRightFirst,autopilot):
+def doLineup(myWin,myMouse,clickSound,badClickSound,possibleResps,xOffset,bothSides,leftRightFirst,autopilot):
     if type(leftRightFirst) is str: #convert to 0/1
         if leftRightFirst == 'right':
             leftRightFirst = 1
@@ -160,7 +161,6 @@ def doLineup(myWin,myMouse,clickSound,badClickSound,possibleResps,bothSides,left
     responsesAutopilot = []
     responses = []
     #First collect one, then dim that one and collect the other
-    xOffset = 0.7
     if autopilot: #I haven't bothered to make autopilot display the response screen
         responsesAutopilot.append('Z')
     else:
@@ -227,7 +227,7 @@ if __name__=='__main__':  #Running this file directly, must want to test functio
     bothSides = True
     leftRightFirst = False
     expStop,passThisTrial,responses,responsesAutopilot = \
-                doLineup(myWin, myMouse, clickSound, badClickSound, possibleResps, bothSides, leftRightFirst, autopilot)
+                doLineup(myWin, myMouse, clickSound, badClickSound, possibleResps, .7, bothSides, leftRightFirst, autopilot)
 
     print('autopilot=',autopilot, 'responses=',responses)
     print('expStop=',expStop,' passThisTrial=',passThisTrial,' responses=',responses, ' responsesAutopilot =', responsesAutopilot)

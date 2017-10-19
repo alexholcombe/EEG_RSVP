@@ -77,7 +77,7 @@ bgColor = [-.7,-.7,-.7] # [-1,-1,-1]
 cueRingColor = [.9,-1.,-1.]
 distractorRingColor = [-1,.9,-1]
 letterColor = [1.,1.,1.]
-cueRadius = 2.5 #6 deg, as in Martini E2    Letters should have height of 2.5 deg
+cueRadius =  7 #2.5 #6 deg in Martini E2    Letters should have height of 2.5 deg
 widthPix= 1920 #1440 # #monitor width in pixels of Agosta
 heightPix= 1080 #900 # #800 #monitor height in pixels
 monitorwidth = 40.5 #monitor width in cm
@@ -336,11 +336,11 @@ if doAB:
     trialsForPossibleStaircase = data.TrialHandler(stimListAB,trialsPerCondition) #independent randomization, just to create random trials for staircase phase
 
 stimListSingleStream = []
-trialsPerConditionAB  = 1 #4 #default value
+trialsPerCondition  = 1 #4 #default value
 possibleCue1positions =  np.array([7,9,11,13,15,17])  #used in Martini E2, group 2 lizzy double check this
-for cue1pos in possibleCue1positions:
-   for cue2lag in possibleCue2lags:
-        stimListSingleStream.append( {'targetLeftRightIfOne':'left','numStreams':1, 'task':'T1', 'cue1pos':cue1pos } ) 
+for cue1pos  in possibleCue1positions:
+        stimListSingleStream.append( {'targetLeftRightIfOne':'left','numStreams':1, 'task':'T1', 'cue1pos':cue1pos, 
+                                                            'firstRespLRifTwo':'left' } ) 
 trialsSingleStream= data.TrialHandler(stimListSingleStream,trialsPerCondition) #constant stimuli method
 
 #For the dual-stream simultaneous target
@@ -354,8 +354,8 @@ trialsSingleStream= data.TrialHandler(stimListSingleStream,trialsPerCondition) #
 #               {'numStreams':2, 'task':task, 'targetLeftRightIfOne':targetLeftRightIfOne, 'cue1pos':cuesPos, 'firstRespLRifTwo': firstRespLRifTwo, 'cue2lag':0 } 
 #             )  #cue2lag = 0, meaning simultaneous targets
 
-trialsPerConditionDualStream =2 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
-trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
+#trialsPerConditionDualStream =2 #10 #max(1, trialsAB.nTotal / len(stimListDualStream) )
+#trialsDualStream = data.TrialHandler(stimListDualStream,trialsPerConditionDualStream) #constant stimuli method
 
 
 logging.info( ' each trialDurFrames='+str(trialDurFrames)+' or '+str(trialDurFrames*(1000./refreshRate))+ \
@@ -447,10 +447,7 @@ def letterToNumber(letter): #A = 0, Z = 25
 #print header for data file
 print('experimentPhase\ttrialnum\tsubject\ttask\t',file=dataFile,end='')
 print('noisePercent\t',end='',file=dataFile)
-if task=='T1':
-    numRespsWanted = 1
-elif task=='T1T2':
-    numRespsWanted = 2
+numRespsWanted = 2  #At least for purposes of header, in case experiment includes a two-target task. NaNs are printed for T1 task 
 print('firstRespLRifTwo\ttargetLeftRightIfOne\t',end='',file=dataFile)
 for i in range(numRespsWanted):
    dataFile.write('answerPos'+str(i)+'\t')   #have to use write to avoid ' ' between successive text, at least until Python 3
@@ -531,7 +528,7 @@ for cueN in xrange(2):
                  radius=cueRadius,#Martini used circles with diameter of 12 deg
                  lineColorSpace = 'rgb',
                  lineColor=bgColor,
-                 lineWidth=8.0, #in pixels
+                 lineWidth=1, #8.0, #in pixels
                  units = 'deg',
                  fillColorSpace = 'rgb',
                  fillColor=None, #beware, with convex shapes fill colors don't work
@@ -542,7 +539,7 @@ for cueN in xrange(2):
 
 #predraw all 26 letters 
 ltrHeight = 3 #Martini letters were 2.5deg high
-cueOffset = 6
+cueOffset = 0 #for single-stream T1 only task 
 noiseOffsetKludge = -.15 #will be added to 1 and multiplied by actual offset. Probably should have multiplicative term dependent on font size
 ltrsDrawObjectsStream1 = list()
 ltrsDrawObjectsStream2 = list()
@@ -828,7 +825,6 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print(responsePosRelative[cueI], '\t', end='',file=dataFile) #responsePosRelative0
         if send_triggers:
             code = int(p_correct + responsePosRelative[cueI])
-            print(code)
             send_trigger_to_port( code )
         #print('for cueI=',cueI,' cuesPos[cueI]=',cuesPos[cueI], ' answerCharacter=',answerCharacter, ' responses[cueI]=',responses[cueI], ' eachCorrect[cueI]=',eachCorrect[cueI],' resopnsePosRelative[cueI]= ',responsePosRelative[cueI])
         if task=='T1T2':
@@ -841,7 +837,7 @@ def handleAndScoreResponse(passThisTrial,responses,responsesAutopilot,task,targe
         print('NaN', '\t', end='', file=dataFile) #answer1
         print('NaN', '\t', end='', file=dataFile) #response1
         print('NaN' , '\t', end='',file=dataFile)   #correct1
-        print('NaN' , '\t', end='',file=dataFile) #resonsePosRelative
+        print('NaN' , '\t', end='',file=dataFile) #resonsePosRelative1
     myWin.flip()
     core.wait(1);
     return correct,eachCorrect,eachApproxCorrect,T1approxCorrect,passThisTrial,expStop
@@ -987,7 +983,7 @@ if doStaircase:
     pylab.show() #must call this to actually show plot
 else: #not staircase
     noisePercent = defaultNoiseLevel
-    phasesMsg = 'Experiment will have '+str(trialsAB.nTotal if doAB else 0)+ ' AB and ' + str(trialsDualStream.nTotal) + '  dualstream trials. Letters will be drawn with superposed noise of' + "{:.2%}".format(defaultNoiseLevel)
+    phasesMsg = 'Experiment will have '+str(trialsAB.nTotal if doAB else 0)+ ' AB and ' + str(trialsSingleStream.nTotal) + '  one-target trials. Letters will be drawn with superposed noise of' + "{:.2%}".format(defaultNoiseLevel)
     print(phasesMsg); logging.info(phasesMsg)
     nDone =0
     if nDone==0:
@@ -1004,9 +1000,9 @@ else: #not staircase
         logging.info(msg); print(msg)
     else:
         msg = "Starting dual stream part of experiment"
-        trials = trialsDualStream
+        trials = trialsSingleStream
         logging.info(msg); print(msg)
-        totalTrials += trialsDualStream.nTotal
+        totalTrials += trialsSingleStream.nTotal
     
     while nDone < totalTrials and expStop==False:
         print("nDone = ", nDone, " out of ", totalTrials, " trials.nRemaining = ", trials.nRemaining)
@@ -1014,10 +1010,10 @@ else: #not staircase
         #Control which block we are in, AB or dualStream
         if trials.nRemaining == 0:  # trialsAB.nTotal:
             if trials == trialsAB:  #check if reached end of the AB part
-                trials = trialsDualStream
+                trials = trialsSingleStream
                 msg = "Starting dual stream part of experiment"
                 logging.info(msg); print(msg)
-            elif trials == trialsDualStream: #check if reached end of dual stream part
+            elif trials == trialsSingleStream: #check if reached end of dual stream part
                 trials = trialsAB
                 msg='Starting AB part of experiment'
                 logging.info(msg); print(msg)
@@ -1045,6 +1041,7 @@ else: #not staircase
         myMouse = event.Mouse()
         if lineupResponse:
             bothSides = True
+            lineupXoffset = 0
             if thisTrial['task']=='T1':
                 bothSides = False
                 sideFirst = thisTrial['targetLeftRightIfOne']
@@ -1054,7 +1051,7 @@ else: #not staircase
             possibleResps = alphabet
             #possibleResps.remove('C'); possibleResps.remove('V')
             expStop,passThisTrial,responses,responsesAutopilot = \
-                letterLineupResponse.doLineup(myWin,myMouse,clickSound,badKeySound,possibleResps,bothSides,sideFirst,autopilot)
+                letterLineupResponse.doLineup(myWin,myMouse,clickSound,badKeySound,possibleResps,lineupXoffset,bothSides,sideFirst,autopilot)
         else:
             expStop,passThisTrial,responses,responsesAutopilot = \
                     stringResponse.collectStringResponse(numRespsWanted,respPromptStim,respStim,acceptTextStim,myWin,clickSound,badKeySound,
